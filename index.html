@@ -1,0 +1,731 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta property="og:title" content="Maja Kids | Locação de brinquedos para festas">
+<meta property="og:description" content="Infláveis, cama elástica, piscina de bolinhas, jogos e máquinas de doces. Monte sua festa e envie pelo WhatsApp.">
+<link rel="icon" type="image/webp" href="img/logo.webp">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Maja Kids</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Locação de infláveis, cama elástica, piscina de bolinhas, jogos e máquinas de doces para festas infantis. Monte sua festa e envie pelo WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Manrope:wght@400;500;700;800&display=swap">
+<style>
+/* Layout: quintal cinematográfico no scroll, depois catálogo com fotos em destaque,
+   seções sóbrias e uma barra fixa no rodapé onde a festa é montada.
+   Tema único e claro, de propósito: neutros frios, vermelho da marca só nas ações principais. */
+:root {
+  color-scheme: light;
+  --fundo: #f5f6f8;
+  --superficie: #ffffff;
+  --tinta: #141d33;
+  --tinta-suave: #5a6478;
+  --linha: #e1e5ec;
+  --acento: #d13a31;
+  --acento-escuro: #a92a23;
+  --azul: #1d5bb8;
+  --amarelo: #f2b632;
+  --verde: #2f7d45;
+  --whats: #168c47;
+  --whats-escuro: #10703a;
+  --ceu: #dcebf5;
+  --sombra: 0 1px 2px rgba(20,29,51,.06), 0 10px 28px rgba(20,29,51,.08);
+  --f-titulo: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --f-texto: "Manrope", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; }
+body { background: var(--fundo); color: var(--tinta); font-family: var(--f-texto); font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--superficie); }
+h1, h2, h3 { font-family: var(--f-titulo); line-height: 1.05; margin: 0; text-wrap: balance; letter-spacing: -.015em; }
+p { margin: 0; }
+a { color: var(--azul); }
+button { font: inherit; cursor: pointer; color: inherit; }
+:focus-visible { outline: 2px solid var(--azul); outline-offset: 3px; border-radius: 6px; }
+.faixa { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.miolo { max-width: 1140px; margin: 0 auto; }
+.olho { font-weight: 800; text-transform: uppercase; letter-spacing: .12em; font-size: .74rem; color: var(--acento); }
+
+/* Botões */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 10px; padding: 12px 20px; font-weight: 800; font-size: .96rem; text-decoration: none; transition: background .15s, transform .15s, border-color .15s; }
+.btn:active { transform: scale(.98); }
+.btn.primario { background: var(--acento); color: #fff; }
+.btn.primario:hover { background: var(--acento-escuro); }
+.btn.whats { background: var(--whats); color: #fff; }
+.btn.whats:hover { background: var(--whats-escuro); }
+.btn.contorno { background: transparent; border: 1.5px solid var(--linha); color: var(--tinta); }
+.btn.contorno:hover { border-color: var(--tinta-suave); }
+.btn.claro { background: var(--superficie); color: var(--tinta); }
+
+/* Topo */
+.topo { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; background: color-mix(in srgb, var(--superficie) 90%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--linha); }
+.topo .miolo { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 8px; }
+.topo img { height: 42px; width: auto; display: block; }
+.topo nav { display: flex; align-items: center; gap: 22px; }
+.topo nav a:not(.btn) { color: var(--tinta-suave); font-weight: 700; font-size: .92rem; text-decoration: none; }
+.topo nav a:not(.btn):hover { color: var(--tinta); }
+.topo nav .btn { padding: 9px 16px; font-size: .9rem; }
+@media (max-width: 680px) { .topo nav a:not(.btn) { display: none; } }
+
+/* Cena do quintal */
+.cena { position: relative; height: 250vh; background: var(--ceu); }
+.cena-palco { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: #cfe4f2; }
+.cena svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.cena-texto { position: absolute; inset: 0 0 auto; z-index: 2; padding-top: clamp(80px, 12vh, 124px); }
+.cena-texto .miolo { display: grid; gap: 12px; max-width: 1140px; }
+.cena-texto h1 { font-size: clamp(2.4rem, 5.4vw, 4.4rem); font-weight: 800; max-width: 12ch; }
+.cena-texto h1 em { font-style: normal; color: var(--acento); }
+.cena-texto p { font-size: clamp(1rem, 1.6vw, 1.15rem); color: var(--tinta-suave); max-width: 42ch; font-weight: 500; }
+.cena-botoes { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
+.dica-scroll { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: .85rem; color: var(--tinta-suave); margin-top: 6px; transition: opacity .3s; }
+.dica-scroll i { width: 16px; height: 24px; border: 2px solid currentColor; border-radius: 10px; position: relative; }
+.dica-scroll i::after { content: ""; position: absolute; left: 50%; top: 4px; width: 2px; height: 5px; margin-left: -1px; background: currentColor; border-radius: 2px; animation: rodinha 1.4s infinite; }
+@keyframes rodinha { 60% { transform: translateY(7px); opacity: 0; } }
+.cena-cta { position: absolute; left: 0; right: 0; bottom: clamp(26px, 6vh, 60px); z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 12px; transform: translateY(30px); opacity: 0; pointer-events: none; transition: transform .6s cubic-bezier(.2,1.3,.4,1), opacity .4s; }
+.cena-cta.visivel { transform: none; opacity: 1; pointer-events: auto; }
+.cena-cta .btn { font-size: 1.12rem; padding: 15px 28px; box-shadow: 0 10px 24px rgba(209,58,49,.3); }
+.fatos { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; padding-inline: 16px; }
+.fatos span { background: rgba(255,255,255,.92); border-radius: 999px; padding: 5px 13px; font-weight: 700; font-size: .84rem; color: var(--tinta); }
+@media (max-width: 640px) { .cena { height: 210vh; } .cena-texto h1 { max-width: none; } .cena-cta { bottom: auto; top: 46%; } }
+
+/* Faixa de números */
+.numeros { background: var(--tinta); color: #fff; }
+.numeros .miolo { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 18px; padding-block: 26px; }
+.numeros b { font-family: var(--f-titulo); font-size: 1.9rem; display: block; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.numeros span { color: #b9c3db; font-size: .92rem; }
+
+/* Seções */
+section.bloco { padding-block: clamp(60px, 9vw, 104px); }
+.cabeca { display: grid; gap: 10px; margin-bottom: 30px; max-width: 640px; }
+.cabeca h2 { font-size: clamp(2rem, 4.2vw, 3rem); font-weight: 800; }
+.cabeca p { color: var(--tinta-suave); font-size: 1.04rem; }
+
+/* Catálogo */
+.filtros { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+.filtro { border: 1.5px solid var(--linha); background: var(--superficie); border-radius: 999px; padding: 8px 16px; font-weight: 700; font-size: .92rem; transition: border-color .15s, background .15s; }
+.filtro:hover { border-color: var(--tinta-suave); }
+.filtro[aria-pressed="true"] { background: var(--tinta); color: #fff; border-color: var(--tinta); }
+.grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+.cartao { background: var(--superficie); border-radius: 16px; overflow: hidden; box-shadow: var(--sombra); display: flex; flex-direction: column; min-width: 0; animation: surgir .55s cubic-bezier(.2,1.2,.4,1) both; animation-delay: calc(var(--i, 0) * 50ms); transition: transform .25s, box-shadow .25s; }
+.cartao:hover { transform: translateY(-4px); box-shadow: 0 1px 2px rgba(20,29,51,.06), 0 18px 40px rgba(20,29,51,.13); }
+@keyframes surgir { from { transform: translateY(22px) scale(.97); } to { transform: none; } }
+.fotos { position: relative; aspect-ratio: 4 / 3; background: var(--linha); max-width: 100%; }
+.trilho { display: flex; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.trilho::-webkit-scrollbar { display: none; }
+.trilho img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start; display: block; }
+.sem-foto { flex: 0 0 100%; display: grid; place-items: center; color: var(--tinta-suave); font-weight: 700; font-size: .9rem; background: repeating-linear-gradient(45deg, #eef1f5 0 12px, #e6eaf0 12px 24px); }
+.pontos { position: absolute; left: 0; right: 0; bottom: 10px; display: flex; justify-content: center; gap: 6px; }
+.pontos button { width: 8px; height: 8px; border-radius: 50%; border: 0; padding: 0; background: rgba(255,255,255,.6); box-shadow: 0 1px 3px rgba(0,0,0,.3); transition: width .2s; }
+.pontos button[aria-current="true"] { background: #fff; width: 20px; border-radius: 5px; }
+.corpo { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.cat { font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--tinta-suave); display: flex; align-items: center; gap: 7px; }
+.cat i { width: 8px; height: 8px; border-radius: 50%; background: var(--c); }
+.cartao h3 { font-size: 1.22rem; }
+.infos { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: .88rem; color: var(--tinta-suave); }
+.infos li { display: flex; gap: 8px; align-items: flex-start; }
+.infos svg { flex: 0 0 16px; width: 16px; height: 16px; margin-top: 3px; color: var(--tinta); }
+.infos b { color: var(--tinta); font-weight: 700; }
+.obs { font-size: .84rem; color: var(--tinta-suave); border-left: 2px solid var(--linha); padding-left: 10px; }
+.add { margin-top: auto; width: 100%; }
+.add[aria-pressed="true"] { background: var(--tinta); }
+
+/* Como funciona */
+#como-funciona { background: var(--superficie); }
+.passos { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 28px; counter-reset: p; }
+.passos li { display: grid; gap: 8px; align-content: start; border-top: 2px solid var(--tinta); padding-top: 16px; }
+.passos .num { font-family: var(--f-titulo); font-weight: 800; font-size: .9rem; color: var(--acento); font-variant-numeric: tabular-nums; }
+.passos h3 { font-size: 1.4rem; }
+.passos p { color: var(--tinta-suave); }
+.cuidados { margin-top: 40px; background: var(--fundo); border-radius: 16px; padding: 22px 24px; display: grid; gap: 8px; max-width: 760px; }
+.cuidados h3 { font-size: 1.15rem; }
+.cuidados ul { margin: 0; padding-left: 20px; color: var(--tinta-suave); display: grid; gap: 4px; }
+
+/* Avaliações */
+.avals { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+.aval { border: 1.5px dashed #c9d1dd; border-radius: 16px; padding: 22px; display: grid; gap: 10px; }
+.estrelas { color: var(--amarelo); letter-spacing: 3px; }
+.aval p { color: var(--tinta-suave); }
+.aval small { font-weight: 800; color: var(--tinta-suave); text-transform: uppercase; letter-spacing: .08em; font-size: .7rem; }
+
+/* Eventos */
+#eventos { background: var(--superficie); }
+.proximo { display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: center; justify-content: space-between; background: var(--tinta); color: #fff; border-radius: 16px; padding: 22px 24px; margin-bottom: 22px; }
+.proximo h3 { font-size: 1.4rem; }
+.proximo p { color: #b9c3db; margin-top: 4px; }
+.mosaico { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 170px; gap: 12px; }
+.mosaico button { position: relative; border: 0; padding: 0; border-radius: 14px; overflow: hidden; background: var(--linha); }
+.mosaico img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s; }
+.mosaico button:hover img { transform: scale(1.05); }
+.mosaico .g1 { grid-column: span 2; grid-row: span 2; }
+.mosaico .g2 { grid-row: span 2; }
+.mosaico .prov { position: absolute; left: 10px; bottom: 10px; background: rgba(20,29,51,.82); color: #fff; font-size: .7rem; font-weight: 800; padding: 3px 9px; border-radius: 999px; }
+@media (max-width: 700px) { .mosaico { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 130px; } .mosaico .g1 { grid-column: span 2; } }
+.lupa { position: fixed; inset: 0; z-index: 90; background: rgba(10,15,30,.9); display: grid; place-items: center; padding: max(20px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(20px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+.lupa img { max-width: min(92vw, 680px); max-height: 80vh; border-radius: 14px; }
+.lupa button { position: absolute; top: calc(14px + env(safe-area-inset-top, 0px)); right: calc(14px + env(safe-area-inset-right, 0px)); }
+
+/* Rodapé */
+footer { background: var(--tinta); color: #fff; padding-block: 52px calc(120px + env(safe-area-inset-bottom, 0px)); }
+footer .miolo { display: grid; gap: 26px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); align-items: start; }
+footer h3 { font-size: 1.1rem; margin-bottom: 6px; }
+footer p { color: #b9c3db; }
+footer a { color: #fff; }
+.numero { font-family: var(--f-titulo); font-size: 1.45rem; font-weight: 800; color: #fff !important; user-select: all; }
+.assinatura { grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,.15); padding-top: 18px; font-size: .86rem; color: #8f9ab4; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.assinatura a { color: #d6dcea; text-decoration: none; }
+.assinatura a:hover { color: #fff; }
+.assinatura b { color: #fff; }
+
+/* Barra fixa da festa */
+.barra { position: fixed; left: 0; right: 0; bottom: 0; z-index: 70; background: var(--superficie); border-top: 1px solid var(--linha); box-shadow: 0 -10px 30px rgba(20,29,51,.1); padding-bottom: env(safe-area-inset-bottom, 0px); transition: transform .35s cubic-bezier(.2,.9,.3,1); }
+.barra[data-vazia="true"] { transform: translateY(115%); }
+.barra-linha { display: flex; align-items: center; gap: 12px; padding-block: 12px; }
+.barra-linha .btn { white-space: nowrap; flex: 0 0 auto; }
+.curto { display: none; }
+@media (max-width: 480px) { .longo { display: none; } .curto { display: inline; } .miniaturas img:nth-child(n+4) { display: none; } }
+.miniaturas { display: flex; }
+.miniaturas img { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; border: 2px solid var(--superficie); margin-left: -10px; box-shadow: 0 1px 3px rgba(0,0,0,.15); }
+.miniaturas img:first-child { margin-left: 0; }
+.miniaturas img.nova { animation: inflar .55s cubic-bezier(.3,1.8,.5,1) both; }
+@keyframes inflar { 0% { transform: scale(.1); } 60% { transform: scale(1.18); } 100% { transform: none; } }
+.resumo { flex: 1; min-width: 0; }
+.resumo b { display: block; font-family: var(--f-titulo); font-size: 1.05rem; }
+.resumo button { border: 0; background: none; padding: 0; color: var(--azul); font-weight: 700; font-size: .86rem; }
+.barra.pulso { animation: pulso .45s; }
+@keyframes pulso { 40% { box-shadow: 0 -10px 30px rgba(20,29,51,.1), inset 0 3px 0 var(--acento); } }
+.detalhe { border-bottom: 1px solid var(--linha); max-height: min(55vh, 460px); overflow: auto; }
+.detalhe .miolo { padding-block: 16px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
+.lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.lista li { display: flex; align-items: center; gap: 12px; }
+.lista img { width: 44px; height: 44px; border-radius: 9px; object-fit: cover; flex: 0 0 auto; }
+.lista span { flex: 1; font-weight: 700; min-width: 0; }
+.tirar { border: 0; background: none; color: var(--tinta-suave); font-size: .82rem; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.campos { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; max-width: 560px; }
+.campo { display: grid; gap: 4px; }
+.campo label { font-weight: 700; font-size: .84rem; }
+.campo input { font: inherit; padding: 10px 12px; border-radius: 10px; border: 1.5px solid var(--linha); background: var(--superficie); color: var(--tinta); min-width: 0; }
+.campo input:focus { outline: none; border-color: var(--azul); }
+.nota { font-size: .8rem; color: var(--tinta-suave); }
+.voador { position: fixed; z-index: 80; border-radius: 50%; object-fit: cover; pointer-events: none; box-shadow: 0 8px 20px rgba(0,0,0,.25); transition: transform .7s cubic-bezier(.5,-.25,.7,1), opacity .7s; }
+
+/* Abertura */
+.abertura { position: fixed; inset: 0; z-index: 100; background: radial-gradient(circle at 50% 55%, #ffffff, #e4eef6); display: grid; place-items: center; overflow: hidden; transition: opacity .6s; }
+.abertura.sumindo { opacity: 0; pointer-events: none; }
+.abertura canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.balao { position: absolute; left: 50%; bottom: -160px; width: 104px; height: 126px; margin-left: -52px; animation: subir 1.3s cubic-bezier(.25,.8,.35,1) forwards, crescer .5s 1.35s ease-in forwards; }
+.balao::before { content: ""; position: absolute; inset: 0; border-radius: 50% 50% 48% 48% / 56% 56% 44% 44%; background: radial-gradient(circle at 34% 30%, rgba(255,255,255,.65) 0 8%, transparent 9%), var(--acento); box-shadow: inset -10px -14px 0 rgba(0,0,0,.12); }
+.balao::after { content: ""; position: absolute; left: 50%; top: 100%; width: 1.5px; height: 120px; background: rgba(20,29,51,.35); }
+@keyframes subir { to { bottom: calc(50% - 63px); } }
+@keyframes crescer { to { transform: scale(2.5); } }
+.abertura .logo { width: min(280px, 68vw); transform: scale(0); transition: transform .7s cubic-bezier(.3,1.6,.5,1); position: relative; z-index: 2; }
+.abertura.estourou .logo { transform: scale(1); }
+.abertura.estourou .balao { display: none; }
+.pular { position: absolute; z-index: 3; right: calc(16px + env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  html { scroll-behavior: auto; }
+  .cena { height: auto; }
+  .cena-palco { position: relative; height: 640px; }
+}
+</style>
+</head>
+<body>
+<header class="topo faixa">
+  <div class="miolo">
+    <a href="#inicio" aria-label="Maja Kids, início"><img src="img/logo.webp" alt="Maja Kids Locação de Brinquedos" width="220" height="147"></a>
+    <nav aria-label="Seções">
+      <a href="#catalogo">Brinquedos</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#eventos">Eventos</a>
+      <a class="btn primario" href="#catalogo">Monte sua festa</a>
+    </nav>
+  </div>
+</header>
+
+<div class="cena" id="inicio">
+  <div class="cena-palco">
+    <svg id="palco-svg" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <defs>
+        <linearGradient id="g-ceu" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#cfe4f2"/><stop offset="1" stop-color="#f1f7fb"/>
+        </linearGradient>
+      </defs>
+      <rect width="1200" height="700" fill="url(#g-ceu)"/>
+      <circle cx="1040" cy="120" r="58" fill="#f4d58a"/>
+      <circle cx="1040" cy="120" r="80" fill="#f4d58a" opacity=".25"/>
+      <g class="nuvens" fill="#ffffff">
+        <g id="nuvem1"><ellipse cx="190" cy="140" rx="70" ry="28"/><ellipse cx="240" cy="122" rx="50" ry="34"/><ellipse cx="150" cy="128" rx="38" ry="26"/></g>
+        <g id="nuvem2" opacity=".85"><ellipse cx="760" cy="90" rx="60" ry="22"/><ellipse cx="800" cy="76" rx="40" ry="28"/></g>
+      </g>
+      <!-- cerca -->
+      <g fill="#ffffff" stroke="#d3e3ee" stroke-width="2">
+        <rect x="0" y="452" width="1200" height="14"/>
+        <rect x="0" y="492" width="1200" height="14"/>
+      </g>
+      <g id="cerca" fill="#ffffff" stroke="#d3e3ee" stroke-width="2"></g>
+      <!-- grama -->
+      <path d="M0 540 Q300 510 600 528 T1200 520 V700 H0Z" fill="#86b874"/>
+      <path d="M0 590 Q350 565 640 585 T1200 575 V700 H0Z" fill="#74a862"/>
+      <!-- arvore -->
+      <g transform="translate(110 360)">
+        <rect x="-10" y="60" width="20" height="130" rx="8" fill="#9a6a3c"/>
+        <circle cx="0" cy="40" r="70" fill="#5f9a5a"/><circle cx="-46" cy="70" r="46" fill="#6faa66"/><circle cx="48" cy="72" r="48" fill="#6faa66"/>
+      </g>
+      <!-- motor -->
+      <g transform="translate(860 560)">
+        <rect x="0" y="0" width="58" height="42" rx="10" fill="#141d33"/>
+        <circle cx="29" cy="21" r="12" fill="#5a6478"/>
+        <path d="M0 22 C-40 22 -50 10 -70 6" stroke="#141d33" stroke-width="12" fill="none" stroke-linecap="round"/>
+      </g>
+      <!-- castelo inflável -->
+      <g id="castelo" style="transform-origin: 600px 600px">
+        <rect x="420" y="520" width="360" height="80" rx="26" fill="#1d5bb8"/>
+        <rect x="430" y="512" width="340" height="22" rx="11" fill="#f2b632"/>
+        <rect x="452" y="360" width="296" height="160" rx="20" fill="#d13a31"/>
+        <path d="M540 520 V440 a60 60 0 0 1 120 0 V520Z" fill="#f2b632"/>
+        <path d="M556 520 V444 a44 44 0 0 1 88 0 V520Z" fill="#1d5bb8" opacity=".9"/>
+        <g fill="#ffffff" opacity=".22"><rect x="470" y="372" width="10" height="130" rx="5"/><rect x="720" y="372" width="10" height="130" rx="5"/></g>
+        <!-- torres -->
+        <rect x="410" y="300" width="70" height="230" rx="28" fill="#1d5bb8"/>
+        <rect x="720" y="300" width="70" height="230" rx="28" fill="#1d5bb8"/>
+        <path d="M402 312 Q445 210 488 312Z" fill="#f2b632"/>
+        <path d="M712 312 Q755 210 798 312Z" fill="#f2b632"/>
+        <circle cx="445" cy="236" r="10" fill="#d13a31"/><circle cx="755" cy="236" r="10" fill="#d13a31"/>
+        <g fill="#f2b632"><rect x="470" y="340" width="30" height="34" rx="12"/><rect x="530" y="340" width="30" height="34" rx="12"/><rect x="590" y="340" width="30" height="34" rx="12"/><rect x="650" y="340" width="30" height="34" rx="12"/><rect x="700" y="340" width="30" height="34" rx="12"/></g>
+        <g fill="#ffffff" opacity=".35"><rect x="420" y="316" width="12" height="190" rx="6"/><rect x="730" y="316" width="12" height="190" rx="6"/></g>
+      </g>
+      <!-- crianças -->
+      <g id="criancas">
+        <g transform="translate(572 470)"><g class="kid"><circle cx="0" cy="-34" r="13" fill="#f2c094"/><path d="M-12 -38 a12 12 0 0 1 24 0 q-4 -9 -12 -8 q-8 -1 -12 8z" fill="#3b2a1e"/><rect x="-12" y="-21" width="24" height="28" rx="9" fill="#f2b632"/><path d="M-12 -14 L-26 -30 M12 -14 L26 -30" stroke="#f2c094" stroke-width="6" stroke-linecap="round"/><path d="M-6 7 L-9 26 M6 7 L9 26" stroke="#141d33" stroke-width="6" stroke-linecap="round"/></g></g>
+        <g transform="translate(628 474)"><g class="kid"><circle cx="0" cy="-30" r="12" fill="#8d5a3b"/><path d="M-12 -32 q0 -16 12 -14 q12 -2 12 14 q-2 -8 -12 -9 q-10 1 -12 9z" fill="#1d130c"/><rect x="-11" y="-18" width="22" height="25" rx="8" fill="#86b874"/><path d="M-11 -12 L-22 2 M11 -12 L24 -24" stroke="#8d5a3b" stroke-width="6" stroke-linecap="round"/><path d="M-5 7 L-8 24 M5 7 L8 24" stroke="#1d5bb8" stroke-width="6" stroke-linecap="round"/></g></g>
+        <g transform="translate(514 520)"><g class="kid"><circle cx="0" cy="-30" r="12" fill="#f6d2b0"/><path d="M-13 -28 q0 -18 13 -15 q13 -3 13 15 l-3 10 q-1 -16 -10 -16 q-9 0 -10 16z" fill="#c9792d"/><path d="M-12 -18 h24 l6 28 h-36z" fill="#d13a31"/><path d="M-10 -12 L-24 -26 M10 -12 L24 -26" stroke="#f6d2b0" stroke-width="6" stroke-linecap="round"/><path d="M-5 10 L-7 24 M5 10 L7 24" stroke="#f6d2b0" stroke-width="6" stroke-linecap="round"/></g></g>
+      </g>
+      <!-- balões -->
+      <g id="baloes">
+        <g class="bl" data-x="300"><path d="M0 0 C-8 60 10 110 0 170" stroke="#5a6478" stroke-width="2" fill="none"/><ellipse cx="0" cy="-34" rx="30" ry="36" fill="#d13a31"/><ellipse cx="-10" cy="-46" rx="7" ry="10" fill="#fff" opacity=".5"/></g>
+        <g class="bl" data-x="350"><path d="M0 0 C8 60 -10 110 0 170" stroke="#5a6478" stroke-width="2" fill="none"/><ellipse cx="0" cy="-34" rx="28" ry="34" fill="#f2b632"/><ellipse cx="-10" cy="-46" rx="7" ry="10" fill="#fff" opacity=".5"/></g>
+        <g class="bl" data-x="270"><path d="M0 0 C-6 60 6 110 0 170" stroke="#5a6478" stroke-width="2" fill="none"/><ellipse cx="0" cy="-34" rx="28" ry="34" fill="#1d5bb8"/><ellipse cx="-10" cy="-46" rx="7" ry="10" fill="#fff" opacity=".5"/></g>
+        <g class="bl" data-x="910"><path d="M0 0 C-8 60 10 110 0 170" stroke="#5a6478" stroke-width="2" fill="none"/><ellipse cx="0" cy="-34" rx="30" ry="36" fill="#86b874"/><ellipse cx="-10" cy="-46" rx="7" ry="10" fill="#fff" opacity=".5"/></g>
+        <g class="bl" data-x="960"><path d="M0 0 C8 60 -10 110 0 170" stroke="#5a6478" stroke-width="2" fill="none"/><ellipse cx="0" cy="-34" rx="28" ry="34" fill="#d13a31"/><ellipse cx="-10" cy="-46" rx="7" ry="10" fill="#fff" opacity=".5"/></g>
+      </g>
+    </svg>
+    <div class="cena-texto faixa">
+      <div class="miolo">
+        <span class="olho">Locação de brinquedos para festas</span>
+        <h1>Diversão que cabe <em>na sua festa.</em></h1>
+        <p>Infláveis, cama elástica, piscina de bolinhas, jogos e máquinas de doces, com monitores para orientar as crianças.</p>
+        <div class="dica-scroll" id="dica"><i aria-hidden="true"></i> Role para montar o quintal</div>
+      </div>
+    </div>
+    <div class="cena-cta" id="cena-cta">
+      <a class="btn primario" href="#catalogo">Monte sua festa</a>
+      <div class="fatos"><span>5 horas de brincadeira</span><span>Monitores</span><span>Orçamento pelo WhatsApp</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="numeros faixa">
+  <div class="miolo">
+    <div><b>14</b><span>brinquedos e máquinas no catálogo</span></div>
+    <div><b>5 horas</b><span>de brincadeira em cada locação</span></div>
+    <div><b>Monitores</b><span>para orientar as crianças</span></div>
+    <div><b>WhatsApp</b><span>orçamento rápido, direto com a gente</span></div>
+  </div>
+</div>
+
+<main>
+  <section class="bloco faixa" id="catalogo">
+    <div class="miolo">
+      <div class="cabeca">
+        <span class="olho">Catálogo</span>
+        <h2>Escolha os brinquedos da festa</h2>
+        <p>Adicione os brinquedos que quiser. Eles vão para a barra no rodapé da tela, e no final você envia tudo de uma vez pelo WhatsApp.</p>
+      </div>
+      <div class="filtros" id="filtros" role="group" aria-label="Filtrar por tipo de brinquedo"></div>
+      <div class="grade" id="grade"></div>
+    </div>
+  </section>
+
+  <section class="bloco faixa" id="como-funciona">
+    <div class="miolo">
+      <div class="cabeca">
+        <span class="olho">Como funciona</span>
+        <h2>Três passos até a festa</h2>
+      </div>
+      <ol class="passos">
+        <li><span class="num">01</span><h3>Escolha</h3><p>Monte a festa no catálogo, adicionando os brinquedos que as crianças vão amar.</p></li>
+        <li><span class="num">02</span><h3>Envie pelo WhatsApp</h3><p>Coloque a data e o local. A mensagem já vai pronta, com a lista de brinquedos.</p></li>
+        <li><span class="num">03</span><h3>Combine e aproveite</h3><p>Acerte o horário e os detalhes com a gente. No dia, é só curtir a festa.</p></li>
+      </ol>
+      <div class="cuidados">
+        <h3>Cuidados importantes</h3>
+        <ul>
+          <li>Os brinquedos devem ser usados de forma correta, seguindo as orientações de segurança.</li>
+          <li>Os monitores orientam e ajudam, mas a supervisão dos pais é sempre necessária.</li>
+          <li>Não ultrapasse a capacidade máxima dos brinquedos.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloco faixa" id="avaliacoes">
+    <div class="miolo">
+      <div class="cabeca">
+        <span class="olho">Avaliações</span>
+        <h2>Quem já fez festa com a gente</h2>
+        <p>Já alugou com a Maja Kids? Conte como foi no nosso Instagram, e a sua opinião pode aparecer aqui.</p>
+      </div>
+      <div class="avals">
+        <div class="aval"><div class="estrelas" aria-hidden="true">★★★★★</div><p>Espaço reservado para a avaliação de um cliente real.</p><small>Em breve</small></div>
+        <div class="aval"><div class="estrelas" aria-hidden="true">★★★★★</div><p>Espaço reservado para a avaliação de um cliente real.</p><small>Em breve</small></div>
+        <div class="aval"><div class="estrelas" aria-hidden="true">★★★★★</div><p>Espaço reservado para a avaliação de um cliente real.</p><small>Em breve</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloco faixa" id="eventos">
+    <div class="miolo">
+      <div class="cabeca">
+        <span class="olho">Eventos Maja Kids</span>
+        <h2>Tardes de brincadeira</h2>
+        <p>De vez em quando a Maja Kids monta um evento aberto, com brinquedos e música. Os pais pagam a entrada e a criança brinca por um tempo combinado.</p>
+      </div>
+      <div class="proximo">
+        <div>
+          <h3>Nenhum evento marcado ainda</h3>
+          <p>Siga o Instagram para saber a data do próximo.</p>
+        </div>
+        <a class="btn claro" href="https://instagram.com/majakidslocacoes" target="_blank" rel="noopener">@majakidslocacoes</a>
+      </div>
+      <div class="mosaico" id="mosaico"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="faixa">
+  <div class="miolo">
+    <div>
+      <h3>Maja Kids</h3>
+      <p>Locação de brinquedos para festas infantis.</p>
+    </div>
+    <div>
+      <h3>WhatsApp</h3>
+      <p class="numero">(33) 99975-9056</p>
+      <p><a href="https://wa.me/5533999759056" target="_blank" rel="noopener">Abrir conversa</a></p>
+    </div>
+    <div>
+      <h3>Instagram</h3>
+      <p><a href="https://instagram.com/majakidslocacoes" target="_blank" rel="noopener">@majakidslocacoes</a></p>
+    </div>
+    <div class="assinatura">
+      <span>© 2026 Maja Kids</span>
+      <a href="https://pine-web-site.pages.dev" target="_blank" rel="noopener">Site feito por <b>Pine Web</b></a>
+    </div>
+  </div>
+</footer>
+
+<div class="barra" id="barra" data-vazia="true" aria-label="Minha festa">
+  <div class="detalhe" id="detalhe" hidden>
+    <div class="miolo faixa">
+      <ul class="lista" id="lista"></ul>
+      <div class="campos">
+        <div class="campo"><label for="data-festa">Data da festa</label><input type="date" id="data-festa"></div>
+        <div class="campo"><label for="local-festa">Bairro ou cidade</label><input type="text" id="local-festa" placeholder="Ex.: Centro" autocomplete="address-level2"></div>
+      </div>
+      <p class="nota">O botão abre o WhatsApp da Maja Kids, (33) 99975-9056, com a mensagem pronta. A reserva é confirmada na conversa.</p>
+    </div>
+  </div>
+  <div class="miolo faixa">
+    <div class="barra-linha">
+      <div class="miniaturas" id="miniaturas"></div>
+      <div class="resumo"><b id="texto-barra">Sua festa</b><button id="ver" aria-expanded="false" aria-controls="detalhe">Ver lista e data</button></div>
+      <a class="btn whats" id="enviar" href="https://wa.me/5533999759056" target="_blank" rel="noopener"><span class="longo">Enviar pelo WhatsApp</span><span class="curto">Enviar</span></a>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  const WHATSAPP = "5533999759056";
+  const reduzir = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const $ = id => document.getElementById(id);
+  const CORES = { "Infláveis": "var(--acento)", "Playground": "var(--azul)", "Jogos": "var(--verde)", "Extras": "var(--amarelo)" };
+  const brinquedos = [
+    { id: "toboga", nome: "Tobogã Premium 2x1", cat: "Infláveis", fotos: ["toboga", "toboga-2"], medidas: "7,00 x 4,50 x 5,20 m", monitor: "Obrigatório", energia: "Motor 110V" },
+    { id: "futebol-sabao", nome: "Futebol de Sabão", cat: "Infláveis", fotos: ["futebol-sabao", "futebol-sabao-2"], medidas: "10,00 x 5,00 x 2,30 m", monitor: "Obrigatório", energia: "Motor 110V", obs: "Precisa de fonte de água e mangueira perto do local." },
+    { id: "guerra-cotonete", nome: "Guerra de Cotonete", cat: "Infláveis", fotos: ["guerra-cotonete"], medidas: "5,00 x 5,00 x 1,10 m", monitor: "Obrigatório", energia: "Motor 110V" },
+    { id: "multiplay", nome: "Multiplay 3x1", cat: "Infláveis", fotos: ["multiplay", "multiplay-2"], medidas: "4,20 x 3,25 x 2,10 m", monitor: "Obrigatório", energia: "Motor 110V", obs: "Escorregador, túnel, piscina de bolinhas e obstáculo num brinquedo só." },
+    { id: "bolao-futebol", nome: "Bolão de Futebol Inflável", cat: "Infláveis", fotos: ["bolao-futebol"], medidas: "1,20 x 1,20 m", energia: "Não usa energia" },
+    { id: "cama-elastica", nome: "Cama Elástica", cat: "Playground", fotos: ["cama-elastica"], medidas: "3,05 x 3,05 m", monitor: "Opcional", energia: "Não usa energia" },
+    { id: "piscina-bolinhas", nome: "Piscina de Bolinhas", cat: "Playground", fotos: ["piscina-bolinhas"], medidas: "1,50 x 1,50 m", monitor: "Opcional", energia: "Não usa energia" },
+    { id: "mini-escorregador", nome: "Mini Escorregador", cat: "Playground", fotos: ["mini-escorregador"], medidas: "1,50 x 0,60 x 0,90 m", monitor: "Opcional", energia: "Não usa energia", obs: "Peso máximo por criança: até 50 kg." },
+    { id: "pebolim", nome: "Mesa de Pebolim", cat: "Jogos", fotos: ["pebolim"], monitor: "Opcional", energia: "Não usa energia" },
+    { id: "aero-hockey", nome: "Mesa de Aero Hockey", cat: "Jogos", fotos: ["aero-hockey"], monitor: "Opcional", energia: "Usa energia elétrica" },
+    { id: "basquete", nome: "Basquete Infantil Eletrônico", cat: "Jogos", fotos: ["basquete"], monitor: "Opcional", energia: "Usa energia elétrica" },
+    { id: "algodao-doce", nome: "Máquina de Algodão Doce", cat: "Extras", fotos: ["algodao-doce"], monitor: "Opcional", obs: "Só a máquina, ou máquina com monitor e açúcar." },
+    { id: "maquina-espuma", nome: "Máquina de Espuma", cat: "Extras", fotos: [], monitor: "Opcional", energia: "Usa energia elétrica", obs: "Precisa de fonte de água durante todo o uso." },
+    { id: "maquina-bolha", nome: "Máquina de Bolha de Sabão", cat: "Extras", fotos: [], monitor: "Opcional", energia: "Usa energia elétrica", obs: "Tem reservatório de água próprio." }
+  ];
+  const foto = f => "img/" + f + ".webp";
+  const capa = b => b.fotos.length ? foto(b.fotos[0]) : "img/logo.webp";
+
+  /* ===== Abertura: balão que estoura em confete ===== */
+  let jaViu = false;
+  try { jaViu = sessionStorage.getItem("maja-abertura") === "1"; } catch (e) {}
+  if (!reduzir && !jaViu) {
+    const ab = document.createElement("div");
+    ab.className = "abertura";
+    ab.innerHTML = '<canvas></canvas><div class="balao"></div><img class="logo" src="img/logo.webp" alt=""><button class="btn contorno pular">Pular</button>';
+    document.body.appendChild(ab);
+    const cv = ab.querySelector("canvas"), ctx = cv.getContext("2d");
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    cv.width = innerWidth * dpr; cv.height = innerHeight * dpr;
+    const cores = ["#d13a31", "#f2b632", "#1d5bb8", "#2f7d45", "#141d33"];
+    let rodando = true;
+    const fechar = () => {
+      if (!rodando) return; rodando = false;
+      try { sessionStorage.setItem("maja-abertura", "1"); } catch (e) {}
+      ab.classList.add("sumindo"); setTimeout(() => ab.remove(), 650);
+    };
+    ab.querySelector(".pular").addEventListener("click", fechar);
+    setTimeout(() => {
+      if (!rodando) return;
+      ab.classList.add("estourou");
+      const cx = cv.width / 2, cy = cv.height / 2, pedacos = [];
+      for (let i = 0; i < 160; i++) {
+        const a = Math.random() * Math.PI * 2, v = (4 + Math.random() * 10) * dpr;
+        pedacos.push({ x: cx, y: cy, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 4 * dpr, r: Math.random() * 6, vr: (Math.random() - .5) * .4, w: (6 + Math.random() * 6) * dpr, h: (3 + Math.random() * 4) * dpr, c: cores[i % cores.length] });
+      }
+      const t0 = performance.now();
+      const quadro = t => {
+        ctx.clearRect(0, 0, cv.width, cv.height);
+        pedacos.forEach(p => {
+          p.vy += .3 * dpr; p.vx *= .985; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+          ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r); ctx.fillStyle = p.c; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); ctx.restore();
+        });
+        if (t - t0 < 2400) requestAnimationFrame(quadro);
+      };
+      requestAnimationFrame(quadro);
+      setTimeout(fechar, 1700);
+    }, 1850);
+  }
+
+  /* ===== Cena do quintal ===== */
+  const cerca = $("cerca");
+  for (let x = 6; x < 1200; x += 40) {
+    const r = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    r.setAttribute("d", `M${x} 545 V440 l12 -14 l12 14 V545Z`);
+    cerca.appendChild(r);
+  }
+  const castelo = $("castelo"), baloes = [...document.querySelectorAll(".bl")], kids = [...document.querySelectorAll(".kid")];
+  const nuvem1 = $("nuvem1"), nuvem2 = $("nuvem2");
+  const cena = document.querySelector(".cena"), cta = $("cena-cta"), dica = $("dica");
+  const svg = $("palco-svg"), xLargo = [660, 705, 630, 1060, 1110], xEstreito = [400, 445, 375, 805, 840];
+  const foco = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  castelo.parentNode.insertBefore(foco, castelo);
+  [document.querySelector('#palco-svg g[transform="translate(860 560)"]'), castelo, $("criancas")].forEach(el => el && foco.appendChild(el));
+  const lim = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const fase = (p, a, b) => lim((p - a) / (b - a));
+  const mola = t => t === 0 ? 0 : t === 1 ? 1 : Math.pow(2, -9 * t) * Math.sin((t * 10 - .75) * (2 * Math.PI) / 3.2) + 1;
+  let alvo = 0, atual = 0;
+  function enquadrar() {
+    const estreito = innerWidth / innerHeight < .8;
+    svg.setAttribute("viewBox", estreito ? "340 0 520 700" : "0 0 1200 700");
+    svg.setAttribute("preserveAspectRatio", estreito ? "xMidYMax meet" : "xMidYMax slice");
+    baloes.forEach((b, i) => b.dataset.x = estreito ? xEstreito[i] : xLargo[i]);
+    foco.setAttribute("transform", estreito ? "" : "translate(200 0)");
+  }
+  function desenhar(p, t) {
+    const inf = fase(p, .02, .42);
+    const sy = .06 + .94 * mola(inf), sx = .55 + .45 * Math.min(1, inf * 1.4);
+    castelo.style.transform = `scale(${sx.toFixed(4)}, ${sy.toFixed(4)})`;
+    baloes.forEach((b, i) => {
+      const s = fase(p, .3 + i * .05, .62 + i * .05);
+      const x = +b.dataset.x + Math.sin(t / 900 + i) * 6;
+      const y = 760 - s * (420 - i * 26) + Math.sin(t / 700 + i * 2) * 5;
+      b.setAttribute("transform", `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${(Math.sin(t / 1100 + i) * 4).toFixed(2)})`);
+    });
+    kids.forEach((k, i) => {
+      const s = fase(p, .55 + i * .07, .7 + i * .07);
+      const pulo = s >= 1 ? Math.abs(Math.sin(t / 260 + i * 1.3)) * 20 : 0;
+      k.style.opacity = s;
+      k.style.transform = `translateY(${(-pulo + (1 - s) * 30).toFixed(1)}px)`;
+    });
+    nuvem1.setAttribute("transform", `translate(${((t / 60) % 1500) - 200} 0)`);
+    nuvem2.setAttribute("transform", `translate(${-((t / 90) % 1400) + 300} 0)`);
+    cta.classList.toggle("visivel", p > .82);
+    dica.style.opacity = p > .08 ? 0 : 1;
+  }
+  function lerScroll() {
+    if (reduzir) { alvo = 1; return; }
+    const r = cena.getBoundingClientRect();
+    alvo = lim(-r.top / Math.max(1, r.height - innerHeight));
+  }
+  function loop(t) {
+    atual += (alvo - atual) * .14;
+    if (Math.abs(alvo - atual) < .0005) atual = alvo;
+    desenhar(atual, t);
+    requestAnimationFrame(loop);
+  }
+  enquadrar();
+  addEventListener("resize", () => { enquadrar(); lerScroll(); });
+  addEventListener("scroll", lerScroll, { passive: true });
+  lerScroll();
+  if (reduzir) desenhar(1, 0); else requestAnimationFrame(loop);
+
+  /* ===== Catálogo ===== */
+  const ICONES = {
+    medidas: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17 17 3l4 4L7 21z"/><path d="m7 13 2 2M10 10l2 2M13 7l2 2"/></svg>',
+    monitor: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>',
+    energia: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>'
+  };
+  const categorias = ["Todos", "Infláveis", "Playground", "Jogos", "Extras"];
+  let catAtual = "Todos";
+  const festa = new Set();
+  try { JSON.parse(localStorage.getItem("maja-festa") || "[]").forEach(id => { if (brinquedos.some(b => b.id === id)) festa.add(id); }); } catch (e) {}
+
+  function montarFiltros() {
+    $("filtros").replaceChildren(...categorias.map(c => {
+      const bt = document.createElement("button");
+      bt.className = "filtro"; bt.textContent = c;
+      bt.setAttribute("aria-pressed", c === catAtual);
+      bt.addEventListener("click", () => { catAtual = c; montarFiltros(); montarGrade(); });
+      return bt;
+    }));
+  }
+
+  function cartao(b, i) {
+    const art = document.createElement("article");
+    art.className = "cartao"; art.style.setProperty("--i", i);
+    const fotosHtml = b.fotos.length
+      ? b.fotos.map((f, j) => `<img src="${foto(f)}" alt="${b.nome}${b.fotos.length > 1 ? " - foto " + (j + 1) : ""}" loading="lazy">`).join("")
+      : `<div class="sem-foto">Foto em breve</div>`;
+    const pontos = b.fotos.length > 1 ? `<div class="pontos">${b.fotos.map((_, j) => `<button aria-label="Ver foto ${j + 1}" ${j === 0 ? 'aria-current="true"' : ""}></button>`).join("")}</div>` : "";
+    const info = [];
+    if (b.medidas) info.push(`<li>${ICONES.medidas}<span><b>Medidas:</b> ${b.medidas}</span></li>`);
+    if (b.monitor) info.push(`<li>${ICONES.monitor}<span><b>Monitor:</b> ${b.monitor}</span></li>`);
+    if (b.energia) info.push(`<li>${ICONES.energia}<span>${b.energia}</span></li>`);
+    art.innerHTML = `
+      <div class="fotos"><div class="trilho">${fotosHtml}</div>${pontos}</div>
+      <div class="corpo">
+        <span class="cat" style="--c:${CORES[b.cat]}"><i></i>${b.cat}</span>
+        <h3>${b.nome}</h3>
+        <ul class="infos">${info.join("")}</ul>
+        ${b.obs ? `<p class="obs">${b.obs}</p>` : ""}
+        <button class="btn primario add" data-id="${b.id}"></button>
+      </div>`;
+    const trilho = art.querySelector(".trilho");
+    const bolinhas = [...art.querySelectorAll(".pontos button")];
+    bolinhas.forEach((bt, j) => bt.addEventListener("click", () => trilho.scrollTo({ left: trilho.clientWidth * j, behavior: "smooth" })));
+    trilho.addEventListener("scroll", () => {
+      const j = Math.round(trilho.scrollLeft / Math.max(1, trilho.clientWidth));
+      bolinhas.forEach((bt, k) => bt.setAttribute("aria-current", k === j));
+    }, { passive: true });
+    art.querySelector(".add").addEventListener("click", () => {
+      if (festa.has(b.id)) { festa.delete(b.id); atualizar(); return; }
+      festa.add(b.id); marcarBotoes();
+      const barraVazia = $("barra").dataset.vazia === "true";
+      $("barra").dataset.vazia = "false";
+      setTimeout(() => voar(art.querySelector(".trilho img"), () => atualizar(b.id)), barraVazia ? 260 : 0);
+    });
+    return art;
+  }
+  function montarGrade() {
+    $("grade").replaceChildren(...brinquedos.filter(b => catAtual === "Todos" || b.cat === catAtual).map(cartao));
+    marcarBotoes();
+  }
+  function marcarBotoes() {
+    document.querySelectorAll(".add").forEach(bt => {
+      const tem = festa.has(bt.dataset.id);
+      bt.setAttribute("aria-pressed", tem);
+      bt.textContent = tem ? "Na sua festa ✓" : "Adicionar à festa";
+    });
+  }
+
+  /* ===== Brinquedo voando até a barra ===== */
+  function voar(img, fim) {
+    if (!img || reduzir) { fim(); return; }
+    const o = img.getBoundingClientRect();
+    if (o.bottom < 0 || o.top > innerHeight) { fim(); return; }
+    const d = $("miniaturas").getBoundingClientRect();
+    const alvoX = d.right > 0 ? d.right + 14 : 40, alvoY = d.top ? d.top + 19 : innerHeight - 40;
+    const v = document.createElement("img");
+    v.src = img.src; v.className = "voador"; v.alt = "";
+    const tam = Math.min(o.width, 110);
+    Object.assign(v.style, { width: tam + "px", height: tam + "px", left: (o.left + o.width / 2 - tam / 2) + "px", top: (o.top + o.height / 2 - tam / 2) + "px" });
+    document.body.appendChild(v);
+    const dx = alvoX - (o.left + o.width / 2), dy = alvoY - (o.top + o.height / 2);
+    requestAnimationFrame(() => requestAnimationFrame(() => { v.style.transform = `translate(${dx}px, ${dy}px) scale(.3)`; v.style.opacity = ".7"; }));
+    setTimeout(() => { v.remove(); fim(); }, 720);
+  }
+
+  /* ===== Barra da festa ===== */
+  function atualizar(novo) {
+    try { localStorage.setItem("maja-festa", JSON.stringify([...festa])); } catch (e) {}
+    const lista = brinquedos.filter(b => festa.has(b.id));
+    const n = lista.length;
+    marcarBotoes();
+    $("barra").dataset.vazia = n === 0;
+    if (n === 0) { $("detalhe").hidden = true; $("ver").setAttribute("aria-expanded", false); $("ver").textContent = "Ver lista e data"; }
+    $("texto-barra").textContent = n === 1 ? "1 brinquedo na sua festa" : `${n} brinquedos na sua festa`;
+    $("miniaturas").replaceChildren(...lista.slice(-5).map(b => {
+      const i = document.createElement("img"); i.src = capa(b); i.alt = "";
+      if (b.id === novo) i.className = "nova";
+      return i;
+    }));
+    if (novo) { const br = $("barra"); br.classList.remove("pulso"); void br.offsetWidth; br.classList.add("pulso"); }
+    $("lista").replaceChildren(...lista.map(b => {
+      const li = document.createElement("li");
+      li.innerHTML = `<img src="${capa(b)}" alt=""><span>${b.nome}</span><button class="tirar">Remover</button>`;
+      li.querySelector(".tirar").addEventListener("click", () => { festa.delete(b.id); atualizar(); });
+      return li;
+    }));
+    atualizarLink();
+  }
+  function atualizarLink() {
+    const lista = brinquedos.filter(b => festa.has(b.id));
+    const data = $("data-festa").value, local = $("local-festa").value.trim();
+    let msg = "Olá, Maja Kids! Quero montar minha festa.";
+    if (data) { const [a, m, d] = data.split("-"); msg += `\nData: ${d}/${m}/${a}`; }
+    if (local) msg += `\nLocal: ${local}`;
+    if (lista.length) msg += "\nBrinquedos:\n" + lista.map(b => "- " + b.nome).join("\n");
+    msg += "\nPode me passar o orçamento?";
+    $("enviar").href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+  }
+  ["data-festa", "local-festa"].forEach(id => $(id).addEventListener("input", atualizarLink));
+  $("data-festa").min = new Date().toISOString().slice(0, 10);
+  $("ver").addEventListener("click", () => {
+    const d = $("detalhe"), abrir = d.hidden;
+    d.hidden = !abrir; $("ver").setAttribute("aria-expanded", abrir);
+    $("ver").textContent = abrir ? "Esconder" : "Ver lista e data";
+  });
+
+  /* ===== Eventos: mosaico e lupa ===== */
+  const galeria = [["toboga", "g1"], ["multiplay-2", "g2"], ["piscina-bolinhas", ""], ["cama-elastica", ""], ["futebol-sabao-2", ""], ["algodao-doce", ""]];
+  $("mosaico").replaceChildren(...galeria.map(([f, c]) => {
+    const bt = document.createElement("button");
+    bt.className = c; bt.setAttribute("aria-label", "Ampliar foto");
+    bt.innerHTML = `<img src="${foto(f)}" alt="" loading="lazy"><span class="prov">Foto provisória</span>`;
+    bt.addEventListener("click", () => abrirLupa(foto(f)));
+    return bt;
+  }));
+  let lupa = null;
+  function abrirLupa(src) {
+    lupa = document.createElement("div"); lupa.className = "lupa";
+    lupa.innerHTML = `<img src="${src}" alt="Foto ampliada"><button class="btn claro">Fechar</button>`;
+    lupa.addEventListener("click", e => { if (e.target === lupa || e.target.tagName === "BUTTON") fecharLupa(); });
+    document.body.appendChild(lupa); lupa.querySelector("button").focus();
+  }
+  function fecharLupa() { if (lupa) { lupa.remove(); lupa = null; } }
+  document.addEventListener("keydown", e => { if (e.key === "Escape") fecharLupa(); });
+
+  montarFiltros(); montarGrade(); atualizar();
+})();
+</script>
+
+</body>
+</html>

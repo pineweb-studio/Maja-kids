@@ -1,0 +1,9 @@
+{
+  // Configuração do Cloudflare: publica a pasta public/ como site estático
+  "name": "maja-kids",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./public",
+    "not_found_handling": "404-page"
+  }
+}

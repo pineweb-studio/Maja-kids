@@ -524,7 +524,7 @@ footer a { color: #fff; }
   const castelo = $("castelo"), baloes = [...document.querySelectorAll(".bl")], kids = [...document.querySelectorAll(".kid")];
   const nuvem1 = $("nuvem1"), nuvem2 = $("nuvem2");
   const cena = document.querySelector(".cena"), cta = $("cena-cta"), dica = $("dica");
-  const svg = $("palco-svg"), xLargo = [660, 705, 630, 1060, 1110], xEstreito = [400, 445, 375, 805, 840];
+  const svg = $("palco-svg"), xLargo = [552, 582, 522, 1060, 1110], xEstreito = [340, 368, 318, 832, 868];
   const foco = document.createElementNS("http://www.w3.org/2000/svg", "g");
   castelo.parentNode.insertBefore(foco, castelo);
   [document.querySelector('#palco-svg g[transform="translate(860 560)"]'), castelo, $("criancas")].forEach(el => el && foco.appendChild(el));
@@ -534,7 +534,7 @@ footer a { color: #fff; }
   let alvo = 0, atual = 0;
   function enquadrar() {
     const estreito = innerWidth / innerHeight < .8;
-    svg.setAttribute("viewBox", estreito ? "340 0 520 700" : "0 0 1200 700");
+    svg.setAttribute("viewBox", estreito ? "300 0 600 700" : "0 0 1200 700");
     svg.setAttribute("preserveAspectRatio", estreito ? "xMidYMax meet" : "xMidYMax slice");
     baloes.forEach((b, i) => b.dataset.x = estreito ? xEstreito[i] : xLargo[i]);
     foco.setAttribute("transform", estreito ? "" : "translate(200 0)");

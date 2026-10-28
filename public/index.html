@@ -208,6 +208,8 @@ footer a { color: #fff; }
 .campo label { font-weight: 700; font-size: .84rem; }
 .campo input { font: inherit; padding: 10px 12px; border-radius: 10px; border: 1.5px solid var(--linha); background: var(--superficie); color: var(--tinta); min-width: 0; }
 .campo input:focus { outline: none; border-color: var(--azul); }
+.erro-campo { margin: 0; font-size: .8rem; font-weight: 700; color: #B42318; }
+.erro-campo:empty { display: none; }
 .nota { font-size: .8rem; color: var(--tinta-suave); }
 .voador { position: fixed; z-index: 80; border-radius: 50%; object-fit: cover; pointer-events: none; box-shadow: 0 8px 20px rgba(0,0,0,.25); transition: transform .7s cubic-bezier(.5,-.25,.7,1), opacity .7s; }
 
@@ -434,8 +436,8 @@ footer a { color: #fff; }
     <div class="miolo faixa">
       <ul class="lista" id="lista"></ul>
       <div class="campos">
-        <div class="campo"><label for="data-festa">Data da festa</label><input type="date" id="data-festa"></div>
-        <div class="campo"><label for="local-festa">Bairro ou cidade</label><input type="text" id="local-festa" placeholder="Ex.: Centro" autocomplete="address-level2"></div>
+        <div class="campo"><label for="data-festa">Data da festa</label><input type="date" id="data-festa" aria-describedby="erro-data"><p class="erro-campo" id="erro-data" aria-live="polite"></p></div>
+        <div class="campo"><label for="local-festa">Bairro ou cidade</label><input type="text" id="local-festa" placeholder="Ex.: Centro" autocomplete="address-level2" maxlength="60"></div>
       </div>
       <p class="nota">O botão abre o WhatsApp da Maja Kids, (33) 99975-9056, com a mensagem pronta. A reserva é confirmada na conversa.</p>
     </div>
@@ -689,16 +691,25 @@ footer a { color: #fff; }
   }
   function atualizarLink() {
     const lista = brinquedos.filter(b => festa.has(b.id));
-    const data = $("data-festa").value, local = $("local-festa").value.trim();
+    const data = dataValida($("data-festa").value), local = $("local-festa").value.trim().replace(/\s+/g, " ");
     let msg = "Olá, Maja Kids! Quero montar minha festa.";
     if (data) { const [a, m, d] = data.split("-"); msg += `\nData: ${d}/${m}/${a}`; }
-    if (local) msg += `\nLocal: ${local}`;
+    if (/\p{L}.*\p{L}/u.test(local)) msg += `\nLocal: ${local}`;
     if (lista.length) msg += "\nBrinquedos:\n" + lista.map(b => "- " + b.nome).join("\n");
     msg += "\nPode me passar o orçamento?";
     $("enviar").href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
   }
   ["data-festa", "local-festa"].forEach(id => $(id).addEventListener("input", atualizarLink));
-  $("data-festa").min = new Date().toISOString().slice(0, 10);
+  /* Verificação de dados (regra PineWeb): data só entra na mensagem se for de hoje até 2 anos à frente */
+  const isoLocal = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  const hoje = new Date(), limite = new Date(hoje.getFullYear() + 2, hoje.getMonth(), hoje.getDate());
+  $("data-festa").min = isoLocal(hoje); $("data-festa").max = isoLocal(limite);
+  function dataValida(v) {
+    const ok = !v || (v >= isoLocal(hoje) && v <= isoLocal(limite));
+    $("erro-data").textContent = ok ? "" : (v < isoLocal(hoje) ? "Essa data já passou. Escolha uma data a partir de hoje." : "Escolha uma data dentro dos próximos 2 anos.");
+    ok ? $("data-festa").removeAttribute("aria-invalid") : $("data-festa").setAttribute("aria-invalid", "true");
+    return ok ? v : "";
+  }
   $("ver").addEventListener("click", () => {
     const d = $("detalhe"), abrir = d.hidden;
     d.hidden = !abrir; $("ver").setAttribute("aria-expanded", abrir);

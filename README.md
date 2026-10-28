@@ -9,3 +9,5 @@ Site da Maja Kids, locação de brinquedos para festas infantis. Feito pela Pine
 Pendências: fotos reais dos eventos, avaliações de clientes, fotos da máquina de espuma e da máquina de bolha.
 
 Documentação completa: `docs/Maja-Kids-documentacao-do-site.pdf`.
+
+(Site feito por [Fellipe Pinho](https://github.com/felliperobertopinhopires-tech) · PineWeb)

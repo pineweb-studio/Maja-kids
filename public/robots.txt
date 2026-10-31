@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://maja-kids.pages.dev/sitemap.xml

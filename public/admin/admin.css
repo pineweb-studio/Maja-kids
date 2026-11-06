@@ -128,3 +128,44 @@ dialog::backdrop { background: rgba(20,29,51,.45); }
 
 .vazio { padding: 28px; text-align: center; color: var(--tinta-suave); font-weight: 600; }
 .rodape-painel { padding-block: 30px; color: var(--tinta-suave); font-size: .8rem; }
+
+/* Tabelas de lista e números grandes (Semana, Financeiro, Relatórios) */
+.grade-cartoes { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+.numero { padding: 16px; }
+.numero span { font-size: .8rem; font-weight: 700; color: var(--tinta-suave); display: block; }
+.numero b { font-family: var(--f-titulo); font-size: 1.6rem; font-variant-numeric: tabular-nums; }
+.numero.verde b { color: var(--verde); }
+.numero.vermelho b { color: var(--acento); }
+.bloco { margin-top: 26px; }
+.bloco > h2 { font-size: 1.3rem; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.lista-tab { width: 100%; border-collapse: collapse; font-size: .9rem; background: var(--superficie); }
+.lista-tab th { text-align: left; font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--tinta-suave); padding: 10px 12px; border-bottom: 1px solid var(--linha); white-space: nowrap; }
+.lista-tab td { padding: 10px 12px; border-bottom: 1px solid var(--linha); vertical-align: top; }
+.lista-tab tr:last-child td { border-bottom: 0; }
+.lista-tab .dir { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.lista-tab tr.clicavel { cursor: pointer; }
+.lista-tab tr.clicavel:hover td { background: #fafbfc; }
+.rolagem { overflow-x: auto; border-radius: 14px; border: 1px solid var(--linha); box-shadow: var(--sombra); }
+.barra-h { height: 8px; border-radius: 4px; background: var(--fundo); overflow: hidden; min-width: 60px; }
+.barra-h i { display: block; height: 100%; background: var(--azul); border-radius: 4px; }
+.chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.chips button { border: 1.5px solid var(--linha); background: var(--superficie); border-radius: 999px; padding: 6px 13px; font-weight: 800; font-size: .84rem; color: var(--tinta-suave); }
+.chips button[aria-pressed="true"] { background: var(--tinta); border-color: var(--tinta); color: #fff; }
+.entrada-cor { color: var(--verde); }
+.saida-cor { color: var(--acento); }
+.itens-edit { display: grid; gap: 8px; }
+.itens-edit .linha { display: grid; grid-template-columns: 1fr 70px 110px 34px; gap: 6px; align-items: center; }
+@media (max-width: 560px) { .itens-edit .linha { grid-template-columns: 1fr 60px 90px 30px; } }
+
+/* Impressão (relatórios, orçamento, contrato) */
+@media print {
+  .topo, .ferramentas, .nao-imprimir, .rodape-painel, .toast { display: none !important; }
+  body { background: #fff; font-size: 12px; }
+  .cartao, .rolagem { box-shadow: none; }
+  .miolo { max-width: none; padding: 0; }
+}
+.resumo-valores { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
+.resumo-valores div { background: var(--fundo); border-radius: 12px; padding: 10px 12px; }
+.resumo-valores span { font-size: .76rem; font-weight: 700; color: var(--tinta-suave); display: block; }
+.resumo-valores b { font-family: var(--f-titulo); font-size: 1.25rem; }
+.resumo-valores .falta b { color: var(--acento); }

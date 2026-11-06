@@ -26,7 +26,7 @@
 (() => {
   const destino = () => {
     const v = new URLSearchParams(location.search).get("voltar") || "";
-    return /^\/admin\/[a-z-]+(\.html)?$/.test(v) ? v : "reservas";
+    return /^\/admin\/[a-z-]+(\.html)?$/.test(v) ? v : "semana";
   };
   // Já está logado? vai direto
   fetch("/api/admin/sessao", { credentials: "same-origin" }).then(r => { if (r.ok) location.replace(destino()); }).catch(() => {});

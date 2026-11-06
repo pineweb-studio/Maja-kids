@@ -28,9 +28,17 @@ Painel com senha para a Maja Kids controlar as reservas, no mesmo visual do site
 
 `npx wrangler pages dev public --d1 DB=local-maja` com um arquivo `.dev.vars` contendo `ADMIN_SENHA=uma-senha-de-teste`. Abra http://localhost:8788/admin/.
 
-### Próximas partes
+### Partes do painel
 
-Semana (alertas), Orçamentos (com pedido pelo site), Acervo e manutenção, Eventos e ingressos, Financeiro, Relatórios e Contrato, seguindo a primeira versão.
+- **Semana**: alertas (sinal faltando, brinquedo não recolhido, defeito, orçamento vencendo, pedido novo do site) e festas dos próximos 7 dias.
+- **Reservas**: calendário, cadastro, pagamentos, baixa dos brinquedos, contrato preenchido para imprimir.
+- **Orçamentos**: criar, mandar no WhatsApp, PDF; aprovar lança a entrada no financeiro. Pedidos do formulário do site caem aqui.
+- **Acervo**: situação de cada brinquedo por dia, manutenção, gastos, preços de aluguel e custo de compra.
+- **Eventos**: eventos próprios com tipos de ingresso, promoções (%, valor, leve X pague Y) e vendas.
+- **Financeiro**: entradas e saídas (automáticas e manuais), despesas fixas lançadas sozinhas, a receber, planilha CSV e impressão.
+- **Relatórios**: faturamento, locações por mês e por brinquedo, retorno (ROI) de cada brinquedo.
+
+Opcional: criar o segredo `TURNSTILE_SECRET` para o servidor exigir o Turnstile no pedido do site.
 
 Pendências: fotos reais dos eventos, avaliações de clientes, fotos da máquina de espuma e da máquina de bolha.
 

@@ -367,6 +367,12 @@ footer a { color: #fff; }
 .campo label { font-weight: 700; font-size: .84rem; }
 .campo input { font: inherit; padding: 10px 12px; border-radius: 10px; border: 1.5px solid var(--linha); background: var(--superficie); color: var(--tinta); min-width: 0; }
 .campo input:focus { outline: none; border-color: var(--azul); }
+.pedido { display: grid; gap: 10px; border-top: 1px dashed var(--linha); padding-top: 14px; }
+.pedido-titulo { font-weight: 700; }
+.pedido-linha { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.pedido-linha .erro-campo { margin: 0; }
+.pedido-linha .erro-campo.ok { color: var(--whats); font-weight: 700; }
+.escondido { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .erro-campo { margin: 0; font-size: .8rem; font-weight: 700; color: #B42318; }
 .erro-campo:empty { display: none; }
 .nota { font-size: .8rem; color: var(--tinta-suave); }
@@ -599,6 +605,16 @@ footer a { color: #fff; }
         <div class="campo"><label for="local-festa">Bairro ou cidade</label><input type="text" id="local-festa" placeholder="Ex.: Centro" autocomplete="address-level2" maxlength="60"></div>
       </div>
       <p class="nota">O botão abre o WhatsApp da Maja Kids, (33) 99975-9056, com a mensagem pronta. A reserva é confirmada na conversa.</p>
+      <form class="pedido" id="pedido" novalidate>
+        <p class="pedido-titulo">Prefere que a gente chame você? Deixe seu nome e WhatsApp e mandamos o orçamento.</p>
+        <div class="campos">
+          <div class="campo"><label for="p-nome">Nome e sobrenome</label><input id="p-nome" autocomplete="name" maxlength="80" required></div>
+          <div class="campo"><label for="p-tel">WhatsApp com DDD</label><input id="p-tel" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="(33) 99999-9999" maxlength="20" required></div>
+        </div>
+        <div class="escondido" aria-hidden="true"><label for="p-empresa">Empresa</label><input id="p-empresa" tabindex="-1" autocomplete="off"></div>
+        <div class="pedido-linha"><button class="btn primario" id="p-enviar">Pedir orçamento</button><p class="erro-campo" id="p-msg" aria-live="polite"></p></div>
+        <p class="nota">Usamos seu nome e telefone só para responder este pedido. Veja a <a href="privacidade">política de privacidade</a>.</p>
+      </form>
     </div>
   </div>
   <div class="miolo faixa">
@@ -887,6 +903,26 @@ footer a { color: #fff; }
     ok ? $("data-festa").removeAttribute("aria-invalid") : $("data-festa").setAttribute("aria-invalid", "true");
     return ok ? v : "";
   }
+  /* Pedido de orçamento pelo site (vai para o painel da Maja Kids). Regra PineWeb: campo isca + validação aqui e no servidor */
+  $("pedido").addEventListener("submit", async ev => {
+    ev.preventDefault();
+    const msg = $("p-msg"), bt = $("p-enviar");
+    const nome = $("p-nome").value.trim().replace(/\s+/g, " "), tel = $("p-tel").value.replace(/\D/g, "").replace(/^55(?=\d{10,11}$)/, "");
+    msg.classList.remove("ok");
+    if (nome.split(" ").filter(p => p.length > 1).length < 2) { msg.textContent = "Escreva seu nome e sobrenome."; $("p-nome").focus(); return; }
+    if (!/^[1-9]{2}9\d{8}$/.test(tel)) { msg.textContent = "Escreva um celular com DDD, por exemplo (33) 99999-9999."; $("p-tel").focus(); return; }
+    if (!festa.size) { msg.textContent = "Escolha pelo menos um brinquedo no catálogo."; return; }
+    bt.disabled = true; msg.textContent = "Enviando…";
+    try {
+      const r = await fetch("/api/pedido-orcamento", { method: "POST", headers: { "content-type": "application/json" },
+        body: JSON.stringify({ nome, telefone: tel, data: dataValida($("data-festa").value), local: $("local-festa").value.trim(), brinquedos: [...festa], empresa: $("p-empresa").value }) });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(d.erro || "Não deu para enviar agora. Chame a gente no WhatsApp.");
+      msg.textContent = "Pedido enviado! A Maja Kids vai te chamar no WhatsApp."; msg.classList.add("ok");
+      $("pedido").reset();
+    } catch (e) { msg.textContent = e.message; }
+    finally { bt.disabled = false; }
+  });
   $("ver").addEventListener("click", () => {
     const d = $("detalhe"), abrir = d.hidden;
     d.hidden = !abrir; $("ver").setAttribute("aria-expanded", abrir);

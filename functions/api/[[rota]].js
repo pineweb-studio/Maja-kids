@@ -1,13 +1,49 @@
 // Todas as rotas do servidor (Cloudflare Pages Functions).
-// Públicas:  GET  /api/disponibilidade?data=AAAA-MM-DD
+// Públicas:  GET  /api/disponibilidade?data=AAAA-MM-DD  ·  POST /api/pedido-orcamento
 // Painel:    /api/admin/...  (todas exigem login, menos /api/admin/login)
 import { prepararBanco, json, ErroPainel, texto, centavos } from "../../lib/banco.js";
 import * as acesso from "../../lib/acesso.js";
 import * as reservas from "../../lib/reservas.js";
+import * as orcamentos from "../../lib/orcamentos.js";
+import * as acervo from "../../lib/acervo.js";
+import * as eventos from "../../lib/eventos.js";
+import * as financeiro from "../../lib/financeiro.js";
 import { BRINQUEDOS, IDS } from "../../lib/brinquedos.js";
 
 const ROTAS_PAINEL = {
+  "GET semana": env => financeiro.semana(env),
   "GET reservas/lista": (env, url) => reservas.lista(env, url),
+  "GET reservas/uma": (env, url) => reservas.uma(env, url),
+  "GET orcamentos/lista": (env, url) => orcamentos.lista(env, url),
+  "GET orcamentos/um": (env, url) => orcamentos.um(env, url),
+  "POST orcamentos/salvar": (env, _u, c) => orcamentos.salvar(env, c),
+  "POST orcamentos/status": (env, _u, c) => orcamentos.mudarStatus(env, c),
+  "POST orcamentos/remover": (env, _u, c) => orcamentos.remover(env, c),
+  "GET acervo/consulta": (env, url) => acervo.consulta(env, url),
+  "GET acervo/lista": env => acervo.lista(env),
+  "POST manutencao/abrir": (env, _u, c) => acervo.abrir(env, c),
+  "POST manutencao/editar": (env, _u, c) => acervo.editar(env, c),
+  "POST manutencao/concluir": (env, _u, c) => acervo.concluir(env, c),
+  "POST manutencao/remover": (env, _u, c) => acervo.remover(env, c),
+  "POST manutencao/custo": (env, _u, c) => acervo.custo(env, c),
+  "POST manutencao/custo-remover": (env, _u, c) => acervo.custoRemover(env, c),
+  "POST brinquedos/custo-compra": (env, _u, c) => acervo.custoCompra(env, c),
+  "GET eventos/lista": env => eventos.lista(env),
+  "POST eventos/salvar": (env, _u, c) => eventos.salvar(env, c),
+  "POST eventos/remover": (env, _u, c) => eventos.remover(env, c),
+  "POST eventos/ingresso": (env, _u, c) => eventos.ingresso(env, c),
+  "POST eventos/ingresso-remover": (env, _u, c) => eventos.ingressoRemover(env, c),
+  "POST eventos/promocao": (env, _u, c) => eventos.promocao(env, c),
+  "POST eventos/promocao-remover": (env, _u, c) => eventos.promocaoRemover(env, c),
+  "POST eventos/vender": (env, _u, c) => eventos.vender(env, c),
+  "POST eventos/cancelar-venda": (env, _u, c) => eventos.cancelarVenda(env, c),
+  "GET financeiro/lista": (env, url) => financeiro.lista(env, url),
+  "POST financeiro/adicionar": (env, _u, c) => financeiro.adicionar(env, c),
+  "POST financeiro/remover": (env, _u, c) => financeiro.remover(env, c),
+  "GET despesas/lista": env => financeiro.despesasLista(env),
+  "POST despesas/salvar": (env, _u, c) => financeiro.despesaSalvar(env, c),
+  "POST despesas/remover": (env, _u, c) => financeiro.despesaRemover(env, c),
+  "GET relatorios": (env, url) => financeiro.relatorios(env, url),
   "POST reservas/salvar": (env, _u, c) => reservas.salvar(env, c),
   "POST reservas/status": (env, _u, c) => reservas.mudarStatus(env, c),
   "POST reservas/item": (env, _u, c) => reservas.adicionarItem(env, c),
@@ -19,9 +55,10 @@ const ROTAS_PAINEL = {
   "POST reservas/cancelar": (env, _u, c) => reservas.cancelar(env, c),
   "POST reservas/remover": (env, _u, c) => reservas.remover(env, c),
   "GET brinquedos": async env => {
-    const { results } = await env.DB.prepare("SELECT brinquedo, valor FROM precos").all();
-    const precos = Object.fromEntries(results.map(p => [p.brinquedo, p.valor]));
-    return { brinquedos: BRINQUEDOS.map(b => ({ ...b, preco: precos[b.id] || 0 })) };
+    const [p, c] = await Promise.all([env.DB.prepare("SELECT brinquedo, valor FROM precos").all(), env.DB.prepare("SELECT brinquedo, valor FROM custos_compra").all()]);
+    const precos = Object.fromEntries(p.results.map(x => [x.brinquedo, x.valor]));
+    const compra = Object.fromEntries(c.results.map(x => [x.brinquedo, x.valor]));
+    return { brinquedos: BRINQUEDOS.map(b => ({ ...b, preco: precos[b.id] || 0, custo_compra: compra[b.id] || 0 })) };
   },
   "POST brinquedos/preco": async (env, _u, c) => {
     const id = texto(c.brinquedo, 40);
@@ -64,6 +101,10 @@ export async function onRequest({ request, env }) {
 
     if (rota === "disponibilidade" && request.method === "GET") {
       return json(await reservas.disponibilidade(env, url), 200, { "cache-control": "public, max-age=60" });
+    }
+
+    if (rota === "pedido-orcamento" && request.method === "POST") {
+      return json(await orcamentos.pedidoSite(env, request, await corpoJSON(request)));
     }
 
     if (!rota.startsWith("admin/")) throw new ErroPainel(404, "Rota não encontrada.");

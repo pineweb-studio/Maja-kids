@@ -3,8 +3,13 @@
 "use strict";
 const Painel = (() => {
   const PAGINAS = [
-    { href: "reservas", nome: "Reservas" }
-    // Próximas partes: Semana, Orçamentos, Acervo, Eventos, Financeiro, Relatórios
+    { href: "semana", nome: "Semana" },
+    { href: "reservas", nome: "Reservas" },
+    { href: "orcamentos", nome: "Orçamentos" },
+    { href: "acervo", nome: "Acervo" },
+    { href: "eventos", nome: "Eventos" },
+    { href: "financeiro", nome: "Financeiro" },
+    { href: "relatorios", nome: "Relatórios" }
   ];
 
   async function api(rota, corpo) {
@@ -53,7 +58,7 @@ const Painel = (() => {
     const topo = document.createElement("header");
     topo.className = "topo";
     topo.innerHTML = `<div class="miolo">
-      <a class="marca" href="reservas"><img src="../img/logo.webp" alt="Maja Kids"><span>Painel</span></a>
+      <a class="marca" href="semana"><img src="../img/logo.webp" alt="Maja Kids"><span>Painel</span></a>
       <nav aria-label="Painel">${PAGINAS.map(p => `<a href="${p.href}"${p.href === atual ? ' aria-current="page"' : ""}>${p.nome}</a>`).join("")}</nav>
       <div class="conta"><button class="btn link" id="btn-senha">Trocar senha</button><button class="btn link" id="btn-sair">Sair</button></div>
     </div>`;
@@ -89,5 +94,45 @@ const Painel = (() => {
     d.showModal();
   }
 
-  return { api, reais, centavos, valorCampo, dataBR, hoje, esc, aviso, tentar, montarTopo };
+  // Janela (dialog) genérica; elementos com data-fechar fecham
+  function janela(html, largo) {
+    const d = document.createElement("dialog");
+    if (largo) d.style.width = "min(820px, calc(100vw - 24px))";
+    d.innerHTML = html;
+    document.body.appendChild(d);
+    d.addEventListener("close", () => d.remove());
+    d.querySelectorAll("[data-fechar]").forEach(b => b.addEventListener("click", () => d.close()));
+    d.showModal();
+    return d;
+  }
+  const somarDias = (iso, n) => { const d = new Date(iso + "T12:00:00"); d.setDate(d.getDate() + n); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
+  const MESES = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
+  const nomeMes = m => { const [a, n] = m.split("-"); return MESES[+n - 1].slice(0, 3) + "/" + a.slice(2); };
+  const param = n => new URLSearchParams(location.search).get(n);
+  // Baixar planilha CSV (abre no Excel/Numbers; ; como separador por causa da vírgula decimal)
+  function baixarCSV(nome, linhas) {
+    const csv = "\ufeff" + linhas.map(l => l.map(c => `"${String(c ?? "").replace(/"/g, '""')}"`).join(";")).join("\r\n");
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+    a.download = nome; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  }
+  // Formulário em janela: campos em HTML; enviar(dados, janela) recebe os campos com name
+  function formulario(titulo, campos, enviar, { botao = "Salvar", extra = "" } = {}) {
+    const d = janela(`<form novalidate>
+      <div class="janela-topo"><h2>${titulo}</h2><button type="button" class="fechar" data-fechar aria-label="Fechar">×</button></div>
+      <div class="janela-corpo"><div class="grade-campos">${campos}</div><p class="erro-msg" aria-live="polite"></p></div>
+      <div class="janela-rodape">${extra}<button class="btn primario">${botao}</button></div></form>`);
+    d.querySelector("form").addEventListener("submit", async ev => {
+      ev.preventDefault();
+      const dados = Object.fromEntries([...d.querySelectorAll("[name]")].map(i => [i.name, i.type === "checkbox" ? i.checked : i.value]));
+      try { await enviar(dados, d); d.close(); } catch (e) { d.querySelector(".erro-msg").textContent = e.message; }
+    });
+    const p = d.querySelector("input,select,textarea"); if (p) p.focus();
+    return d;
+  }
+  const campo = (rotulo, nome, attrs = "", largo = false) => `<div class="campo${largo ? " largo" : ""}"><label for="f-${nome}">${rotulo}</label><input id="f-${nome}" name="${nome}" ${attrs}></div>`;
+  const telWhats = t => { let n = String(t || "").replace(/\D/g, ""); if (n.length <= 11) n = "55" + n; return n; };
+
+  return { api, reais, centavos, valorCampo, dataBR, hoje, esc, aviso, tentar, montarTopo, janela, somarDias, nomeMes, param, baixarCSV, telWhats, MESES, formulario, campo };
 })();

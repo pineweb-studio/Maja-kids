@@ -16,7 +16,7 @@
 
   let brinquedos = [];
   let reservas = [];
-  let mes = hoje().slice(0, 7);
+  let mes = /^\d{4}-\d{2}$/.test(Painel.param("mes") || "") ? Painel.param("mes") : hoje().slice(0, 7);
   let modo = "cal";
   try { modo = localStorage.getItem("maja-modo-reservas") === "quadro" ? "quadro" : "cal"; } catch {}
 
@@ -192,6 +192,7 @@
       <div class="janela-rodape">
         ${r.status !== "finalizada" ? `<button class="btn perigo" id="d-excluir">Excluir</button>` : ""}
         ${aberta ? `<button class="btn perigo" id="d-cancelar">Cancelar reserva</button>` : ""}
+        ${r.status !== "cancelada" ? `<a class="btn" href="contrato?id=${r.id}" target="_blank" rel="noopener">Contrato</a>` : ""}
         ${aberta ? `<button class="btn" id="d-editar">Editar</button>` : ""}
         ${aberta && falta(r) && r.telefone ? `<a class="btn whats" id="d-cobrar" target="_blank" rel="noopener">Cobrar no WhatsApp</a>` : ""}
         ${aberta && SIT[r.status].prox ? `<button class="btn primario" id="d-prox">${SIT[r.status].acao}</button>` : ""}
@@ -217,7 +218,17 @@
       if (Number.isNaN(valor)) return aviso("Valor inválido.", true);
       tentar(() => api("reservas/item", { reserva_id: id, brinquedo, valor }), "Brinquedo adicionado").then(recarregar);
     });
-    d.querySelectorAll("[data-baixa]").forEach(s => s.addEventListener("change", () => tentar(() => api("reservas/item-baixa", { id: Number(s.dataset.baixa), status: s.value }), "Baixa registrada").then(recarregar, recarregar)));
+    d.querySelectorAll("[data-baixa]").forEach(s => s.addEventListener("change", async () => {
+      try {
+        await tentar(() => api("reservas/item-baixa", { id: Number(s.dataset.baixa), status: s.value }), "Baixa registrada");
+        if (s.value === "defeito") {
+          const item = r.itens.find(i => i.id === Number(s.dataset.baixa));
+          const defeito = prompt(`Qual o defeito do ${nomeBrinquedo(item.brinquedo)}? (deixe vazio para não abrir manutenção agora)`);
+          if (defeito && defeito.trim()) await tentar(() => api("manutencao/abrir", { brinquedo: item.brinquedo, defeito, reserva_id: id }), "Manutenção aberta no Acervo");
+        }
+      } catch {}
+      recarregar();
+    }));
     d.querySelectorAll("[data-tirar]").forEach(b => b.addEventListener("click", () => { if (confirm("Tirar este brinquedo da reserva?")) tentar(() => api("reservas/item-remover", { id: Number(b.dataset.tirar) }), "Brinquedo removido").then(recarregar); }));
     on("#p-add", () => {
       const valor = centavos(d.querySelector("#p-valor").value);
@@ -375,5 +386,9 @@
     const d = await api("brinquedos");
     brinquedos = d.brinquedos;
     await carregar();
+    const abrir = Number(Painel.param("abrir"));
+    if (abrir && reservas.some(x => x.id === abrir)) abrirDetalhe(abrir);
+    if (Painel.param("nova")) formulario(null);
+    if (abrir || Painel.param("nova")) history.replaceState(null, "", "reservas");
   })().catch(() => {});
 })();

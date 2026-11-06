@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Reservas · Painel Maja Kids</title>
+<link rel="icon" type="image/webp" href="../img/logo.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Manrope:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="admin.css">
+<style>
+/* Calendário do mês */
+.calendario { overflow: hidden; }
+.cal-semana, .cal-dias { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
+.cal-semana span { padding: 10px 8px; font-weight: 800; font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--tinta-suave); border-bottom: 1px solid var(--linha); }
+.dia { min-height: 108px; padding: 6px; border-right: 1px solid var(--linha); border-bottom: 1px solid var(--linha); display: flex; flex-direction: column; gap: 4px; cursor: pointer; background: var(--superficie); text-align: left; border-top: 0; border-left: 0; }
+.dia:nth-child(7n) { border-right: 0; }
+.dia:hover { background: #fafbfc; }
+.dia.fora { background: var(--fundo); color: #a3abbb; }
+.dia .n { font-weight: 800; font-size: .85rem; }
+.dia.hoje .n { background: var(--acento); color: #fff; border-radius: 999px; width: 26px; height: 26px; display: grid; place-items: center; }
+.chip { display: block; width: 100%; border: 0; text-align: left; font-size: .76rem; font-weight: 700; padding: 3px 6px; border-radius: 6px; background: color-mix(in srgb, var(--c) 14%, white); color: color-mix(in srgb, var(--c) 80%, black); border-left: 3px solid var(--c); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chip.cancelada { text-decoration: line-through; opacity: .7; }
+.mais { font-size: .72rem; font-weight: 800; color: var(--tinta-suave); }
+@media (max-width: 720px) {
+  .dia { min-height: 56px; padding: 4px; align-items: center; }
+  .dia .chip { display: none; }
+  .dia .pontos { display: flex; gap: 3px; flex-wrap: wrap; justify-content: center; }
+  .dia .pontos i { width: 7px; height: 7px; border-radius: 50%; background: var(--c); }
+  .mais { display: none; }
+}
+@media (min-width: 721px) { .dia .pontos { display: none; } }
+
+/* Lista do mês (abaixo do calendário) */
+.lista-mes { margin-top: 22px; display: grid; gap: 10px; }
+.lista-mes h2 { font-size: 1.2rem; }
+.linha-reserva { display: grid; grid-template-columns: 64px 1fr auto; gap: 12px; align-items: center; padding: 12px 14px; cursor: pointer; text-align: left; width: 100%; border: 1px solid var(--linha); }
+.linha-reserva:hover { border-color: var(--tinta-suave); }
+.linha-reserva .data { text-align: center; font-family: var(--f-titulo); font-weight: 800; line-height: 1; }
+.linha-reserva .data b { display: block; font-size: 1.6rem; }
+.linha-reserva .data small { font-family: var(--f-texto); font-size: .7rem; text-transform: uppercase; color: var(--tinta-suave); }
+.linha-reserva .quem { min-width: 0; }
+.linha-reserva .quem b { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.linha-reserva .quem span { font-size: .84rem; color: var(--tinta-suave); }
+.linha-reserva .quem span.selo { color: var(--c); font-size: .72rem; }
+.linha-reserva .valores { text-align: right; font-size: .84rem; }
+.linha-reserva .valores b { display: block; font-size: 1rem; }
+
+/* Quadro (Kanban) */
+.quadro { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(250px, 1fr); gap: 12px; overflow-x: auto; padding-bottom: 12px; }
+.coluna { background: #eceff3; border-radius: 14px; padding: 10px; display: flex; flex-direction: column; gap: 8px; min-height: 200px; }
+.coluna h2 { font-size: .95rem; display: flex; justify-content: space-between; align-items: center; padding: 4px 4px 6px; font-family: var(--f-texto); font-weight: 800; }
+.coluna h2 .qtd { background: var(--superficie); border-radius: 999px; padding: 1px 9px; font-size: .78rem; }
+.ficha { padding: 11px 12px; cursor: pointer; text-align: left; width: 100%; display: grid; gap: 5px; border: 1px solid var(--linha); border-top: 3px solid var(--c); box-shadow: none; }
+.ficha:hover { border-color: var(--tinta-suave); border-top-color: var(--c); }
+.ficha b { font-size: .95rem; }
+.ficha .info { font-size: .8rem; color: var(--tinta-suave); display: flex; justify-content: space-between; gap: 8px; }
+.ficha .alerta { font-size: .74rem; font-weight: 800; color: var(--acento); }
+
+/* Detalhe da reserva */
+.resumo-valores { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
+.resumo-valores div { background: var(--fundo); border-radius: 12px; padding: 10px 12px; }
+.resumo-valores span { font-size: .76rem; font-weight: 700; color: var(--tinta-suave); display: block; }
+.resumo-valores b { font-family: var(--f-titulo); font-size: 1.25rem; }
+.resumo-valores .falta b { color: var(--acento); }
+.dados { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px 16px; font-size: .9rem; }
+.dados dt { font-size: .74rem; font-weight: 800; color: var(--tinta-suave); text-transform: uppercase; letter-spacing: .05em; }
+.dados dd { margin: 0 0 4px; overflow-wrap: anywhere; }
+.secao h3 { font-size: 1.05rem; margin-bottom: 8px; }
+.tabela { width: 100%; border-collapse: collapse; font-size: .9rem; }
+.tabela td { padding: 8px 4px; border-bottom: 1px solid var(--linha); vertical-align: middle; }
+.tabela td:last-child { text-align: right; white-space: nowrap; }
+.tabela select { border: 1.5px solid var(--linha); border-radius: 7px; padding: 4px 6px; font-size: .82rem; background: var(--superficie); }
+.adicionar { display: grid; grid-template-columns: 1fr 120px auto; gap: 8px; margin-top: 10px; }
+.adicionar.pag { grid-template-columns: 110px 150px 1fr auto; }
+@media (max-width: 560px) { .adicionar, .adicionar.pag { grid-template-columns: 1fr 1fr; } .adicionar .btn { grid-column: 1 / -1; } }
+.escolha-brinquedos { display: grid; gap: 6px; max-height: 300px; overflow: auto; padding: 4px; }
+.escolha-brinquedos label { display: grid; grid-template-columns: auto 1fr 110px; gap: 10px; align-items: center; font-weight: 600; padding: 6px 8px; border-radius: 8px; border: 1px solid var(--linha); }
+.escolha-brinquedos label.ocupado { opacity: .5; }
+.escolha-brinquedos label small { color: var(--acento); font-weight: 800; display: block; }
+.precos { display: grid; gap: 6px; }
+.precos label { display: grid; grid-template-columns: 1fr 120px; gap: 10px; align-items: center; font-weight: 600; }
+</style>
+</head>
+<body>
+<main class="miolo">
+  <div class="cabeca">
+    <div><span class="olho">Painel</span><h1>Reservas</h1></div>
+    <div class="ferramentas">
+      <div class="alternar" role="group" aria-label="Modo de ver">
+        <button id="modo-cal" aria-pressed="true">Calendário</button>
+        <button id="modo-quadro" aria-pressed="false">Quadro</button>
+      </div>
+      <div class="mes">
+        <button id="mes-ant" aria-label="Mês anterior">‹</button>
+        <input type="month" id="mes" aria-label="Mês e ano">
+        <button id="mes-prox" aria-label="Próximo mês">›</button>
+      </div>
+      <button class="btn" id="btn-precos">Preços</button>
+      <button class="btn primario" id="btn-nova">+ Nova reserva</button>
+    </div>
+  </div>
+
+  <section id="vista-cal">
+    <div class="cartao calendario">
+      <div class="cal-semana"><span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span></div>
+      <div class="cal-dias" id="dias"></div>
+    </div>
+    <div class="lista-mes" id="lista-mes"></div>
+  </section>
+
+  <section id="vista-quadro" hidden>
+    <div class="quadro" id="quadro"></div>
+  </section>
+
+  <p class="rodape-painel">Painel Maja Kids · feito pela PineWeb</p>
+</main>
+<script src="comum.js"></script>
+<script src="reservas.js"></script>
+</body>
+</html>

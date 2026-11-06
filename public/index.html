@@ -339,6 +339,8 @@ footer a { color: #fff; }
 /* Barra fixa da festa */
 .barra { position: fixed; left: 0; right: 0; bottom: 0; z-index: 70; background: var(--superficie); border-top: 1px solid var(--linha); box-shadow: 0 -10px 30px rgba(20,29,51,.1); padding-bottom: env(safe-area-inset-bottom, 0px); transition: transform .35s cubic-bezier(.2,.9,.3,1); }
 .barra[data-vazia="true"] { transform: translateY(115%); }
+.ocupado-aviso { display: block; color: var(--acento); font-weight: 700; font-size: .8rem; line-height: 1.3; }
+.add:disabled { background: var(--linha); color: var(--tinta-suave); cursor: not-allowed; }
 .barra-linha { display: flex; align-items: center; gap: 12px; padding-block: 12px; }
 .barra-linha .btn { white-space: nowrap; flex: 0 0 auto; }
 .curto { display: none; }
@@ -746,6 +748,7 @@ footer a { color: #fff; }
   const categorias = ["Todos", "Infláveis", "Playground", "Jogos", "Extras"];
   let catAtual = "Todos";
   const festa = new Set();
+  let ocupados = new Set(), pedidoData = 0;
   try { JSON.parse(localStorage.getItem("maja-festa") || "[]").forEach(id => { if (brinquedos.some(b => b.id === id)) festa.add(id); }); } catch (e) {}
 
   function montarFiltros() {
@@ -800,10 +803,26 @@ footer a { color: #fff; }
   }
   function marcarBotoes() {
     document.querySelectorAll(".add").forEach(bt => {
-      const tem = festa.has(bt.dataset.id);
+      const tem = festa.has(bt.dataset.id), ocupado = ocupados.has(bt.dataset.id);
       bt.setAttribute("aria-pressed", tem);
-      bt.textContent = tem ? "Na sua festa ✓" : "Adicionar à festa";
+      bt.disabled = ocupado && !tem;
+      bt.textContent = ocupado && !tem ? "Já reservado nessa data" : tem ? "Na sua festa ✓" : "Adicionar à festa";
     });
+  }
+
+  /* ===== Disponibilidade: brinquedos já reservados na data escolhida (vem do painel) ===== */
+  async function checarData(data) {
+    const meu = ++pedidoData;
+    let novos = new Set();
+    if (data) {
+      try {
+        const r = await fetch("/api/disponibilidade?data=" + encodeURIComponent(data));
+        if (r.ok) novos = new Set(((await r.json()).ocupados || []).filter(id => typeof id === "string"));
+      } catch (e) {}
+    }
+    if (meu !== pedidoData) return;
+    ocupados = novos;
+    atualizar();
   }
 
   /* ===== Brinquedo voando até a barra ===== */
@@ -840,7 +859,7 @@ footer a { color: #fff; }
     if (novo) { const br = $("barra"); br.classList.remove("pulso"); void br.offsetWidth; br.classList.add("pulso"); }
     $("lista").replaceChildren(...lista.map(b => {
       const li = document.createElement("li");
-      li.innerHTML = `<img src="${capa(b)}" alt=""><span>${b.nome}</span><button class="tirar">Remover</button>`;
+      li.innerHTML = `<img src="${capa(b)}" alt=""><span>${b.nome}${ocupados.has(b.id) ? '<small class="ocupado-aviso">Já reservado nessa data. Escolha outra data ou tire da lista.</small>' : ""}</span><button class="tirar">Remover</button>`;
       li.querySelector(".tirar").addEventListener("click", () => { festa.delete(b.id); atualizar(); });
       return li;
     }));
@@ -857,6 +876,7 @@ footer a { color: #fff; }
     $("enviar").href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
   }
   ["data-festa", "local-festa"].forEach(id => $(id).addEventListener("input", atualizarLink));
+  $("data-festa").addEventListener("change", () => checarData(dataValida($("data-festa").value)));
   /* Verificação de dados (regra PineWeb): data só entra na mensagem se for de hoje até 2 anos à frente */
   const isoLocal = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
   const hoje = new Date(), limite = new Date(hoje.getFullYear() + 2, hoje.getMonth(), hoje.getDate());

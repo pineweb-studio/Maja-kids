@@ -10,10 +10,26 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Manrope:wght@400;600;700;800&display=swap">
 <link rel="stylesheet" href="admin.css">
 <link rel="stylesheet" href="impressao.css">
+<style>
+/* Mesmo visual do contrato que a Maja Kids já usa */
+.folha.contrato { font-family: Arial, Helvetica, sans-serif; font-size: 12.5px; line-height: 1.5; color: #111; }
+.contrato h1 { font-family: Arial, Helvetica, sans-serif; font-size: 19px; font-weight: 700; text-align: center; margin: 0 0 8px; }
+.contrato .sub { text-align: center; margin-bottom: 14px; }
+.contrato h2 { font-family: Arial, Helvetica, sans-serif; font-size: 14.5px; font-weight: 700; margin: 16px 0 6px; }
+.contrato h3 { font-size: 12.5px; font-weight: 700; margin: 14px 0 6px; }
+.contrato p { margin: 0 0 8px; text-align: justify; }
+.contrato .dados { text-align: left; }
+.contrato .caixas { list-style: none; padding: 0; margin: 0 0 10px; }
+.contrato .caixas li { margin: 3px 0; }
+.contrato .anexo { margin-top: 28px; }
+.contrato .anexo p { margin-bottom: 5px; } .contrato .anexo h1 { margin-bottom: 12px; } .contrato .anexo h3 { margin: 10px 0 4px; }
+.contrato[contenteditable="true"]:focus { outline: 2px dashed #9ab; outline-offset: 6px; }
+@media print { .contrato .anexo { break-before: page; margin-top: 0; } .contrato h2 { break-after: avoid; } }
+</style>
 </head>
 <body>
-<div class="barra-imp"><span class="suave" style="margin-right:auto;font-size:.82rem;align-self:center">Modelo: confira as cláusulas com a Maja Kids antes de usar.</span><button class="btn" onclick="history.length > 1 ? history.back() : close()">Voltar</button><button class="btn primario" onclick="print()">Imprimir ou salvar PDF</button></div>
-<article class="folha" id="folha"><p class="suave">Carregando…</p></article>
+<div class="barra-imp"><span class="suave" style="margin-right:auto;font-size:.82rem;align-self:center">Dica: clique no texto para completar ou corrigir (ex.: o campo Evento) antes de salvar o PDF.</span><button class="btn" onclick="history.length > 1 ? history.back() : close()">Voltar</button><button class="btn primario" onclick="print()">Imprimir ou salvar PDF</button></div>
+<article class="folha contrato" id="folha"><p class="suave">Carregando…</p></article>
 <script src="comum.js"></script>
 <script src="contrato.js"></script>
 </body>

@@ -272,6 +272,48 @@ section.bloco { padding-block: clamp(60px, 9vw, 104px); }
 .dispo-msg.livre { color: var(--whats); }
 .dispo-msg.ocupado { color: #B42318; }
 @media (max-width: 620px) { .dispo { grid-template-columns: 1fr; } }
+
+/* ===== Monitores ===== */
+.mon-foto { margin: 0; position: relative; border-radius: 22px; overflow: hidden; aspect-ratio: 4 / 3; background: var(--ceu); }
+.mon-foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.mon-foto .prov { position: absolute; left: 10px; bottom: 10px; background: rgba(20,29,51,.82); color: #fff; font-size: .7rem; font-weight: 800; padding: 3px 9px; border-radius: 999px; }
+.mon-texto { display: grid; gap: 14px; align-content: start; }
+.mon-texto h2 { font-size: clamp(2rem, 4.4vw, 3.1rem); }
+.mon-extra { display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; align-items: center; background: var(--superficie); color: var(--tinta); border-radius: 16px; padding: 14px 16px; border: 2px solid var(--amarelo); }
+.mon-extra > div:first-child { display: grid; }
+.mon-extra span { font-size: .88rem; color: var(--tinta-suave); font-weight: 600; }
+.passo-qtd { display: inline-flex; align-items: center; border: 1.5px solid var(--linha); border-radius: 999px; overflow: hidden; }
+.passo-qtd button { width: 44px; height: 44px; border: 0; background: var(--fundo); font-size: 1.3rem; font-weight: 800; }
+.passo-qtd button:hover { background: var(--ceu); }
+.passo-qtd button:disabled { opacity: .4; cursor: default; }
+.passo-qtd output { min-width: 40px; text-align: center; font-weight: 800; font-size: 1.1rem; }
+.mon-total { grid-column: 1 / -1; font-weight: 700; font-size: .9rem; color: var(--tinta-suave); }
+.mon-total.tem { color: var(--whats); }
+.mon-mais-servicos { font-size: .92rem; }
+/* Opção A: faixa escura com foto ao lado */
+.mon-a { background: #141d33; color: #fff; }
+.mon-a .olho { color: var(--amarelo); }
+.mon-a .mon-grade { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(24px, 5vw, 56px); align-items: center; }
+.mon-a .mon-texto > p { color: #d5dbe7; }
+.mon-a .mon-texto > p.mon-mais-servicos { color: #fff; }
+.mon-selos { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.mon-selos li { background: rgba(242,182,50,.16); color: var(--amarelo); border: 1px solid rgba(242,182,50,.45); padding: 6px 12px; border-radius: 999px; font-weight: 800; font-size: .84rem; }
+.mon-selos li::before { content: "✓ "; }
+@media (max-width: 820px) { .mon-a .mon-grade { grid-template-columns: 1fr; } }
+/* Opção B: cartaz claro com borda amarela e 3 cartões */
+.mon-cartaz { background: var(--superficie); border-radius: 26px; box-shadow: var(--sombra); overflow: hidden; border: 3px solid var(--amarelo); }
+.mon-topo { display: flex; gap: 16px; align-items: center; padding: 24px clamp(18px, 4vw, 36px); background: linear-gradient(90deg, #fff4d6, #fff); border-bottom: 1px solid var(--linha); }
+.mon-escudo { font-size: 2.6rem; line-height: 1; }
+.mon-topo h2 { font-size: clamp(1.8rem, 4vw, 2.7rem); margin-top: 4px; }
+.mon-corpo { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(20px, 4vw, 40px); padding: clamp(18px, 4vw, 36px); align-items: start; }
+.mon-destaque { font-family: var(--f-titulo); font-weight: 700; font-size: 1.25rem; line-height: 1.25; color: #c2342b; }
+.mon-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.mon-cards div { background: var(--fundo); border-radius: 14px; padding: 12px; display: grid; gap: 2px; align-content: start; }
+.mon-cards span { font-size: 1.4rem; }
+.mon-cards p { font-size: .84rem; color: var(--tinta-suave); line-height: 1.4; }
+@media (max-width: 820px) { .mon-corpo { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { .mon-cards { grid-template-columns: 1fr; } }
+.lista li.mon-linha img { object-fit: contain; background: #fff4d6; }
 .filtros { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
 .filtro { border: 1.5px solid var(--linha); background: var(--superficie); border-radius: 999px; padding: 8px 16px; font-weight: 700; font-size: .92rem; transition: border-color .15s, background .15s; }
 .filtro:hover { border-color: var(--tinta-suave); }
@@ -418,6 +460,7 @@ footer a { color: #fff; }
     <a href="#inicio" aria-label="Maja Kids, início"><img src="img/logo.webp" alt="Maja Kids Locação de Brinquedos" width="220" height="147"></a>
     <nav aria-label="Seções">
       <a href="#catalogo">Brinquedos</a>
+      <a href="#monitores">Monitores</a>
       <a href="#como-funciona">Como funciona</a>
       <a href="#eventos">Eventos</a>
       <a class="btn primario" href="#catalogo">Monte sua festa</a>
@@ -531,6 +574,63 @@ footer a { color: #fff; }
       </div>
       <div class="filtros" id="filtros" role="group" aria-label="Filtrar por tipo de brinquedo"></div>
       <div class="grade" id="grade"></div>
+    </div>
+  </section>
+
+  <!-- Monitores: duas opções de visual para o cliente escolher (?opcao=a ou ?opcao=b). Depois fica só a escolhida. -->
+  <section class="bloco faixa monitores mon-a" id="monitores" data-opcao="a">
+    <div class="miolo mon-grade">
+      <figure class="mon-foto"><img src="img/multiplay-2.webp" alt="Monitora da Maja Kids acompanhando as crianças" loading="lazy"><span class="prov">Foto provisória</span></figure>
+      <div class="mon-texto">
+        <span class="olho">🛡️ Monitores Maja Kids</span>
+        <h2>Segurança e diversão!</h2>
+        <p>Nossos monitores são profissionais capacitados, preparados para acompanhar as brincadeiras, organizar as atividades e garantir mais tranquilidade para os pais.</p>
+        <p>Nossos brinquedos possuem opções de locação com monitores, mas, caso queira reforçar a equipe, você pode contratar profissionais extras.</p>
+        <ul class="mon-selos"><li>Profissionais capacitados</li><li>Brincadeiras organizadas</li><li>Pais mais tranquilos</li></ul>
+        <div class="mon-extra">
+          <div><b>Adicionar monitor extra</b><span>R$ 100,00 por profissional</span></div>
+          <div class="passo-qtd" role="group" aria-label="Monitores extras">
+            <button type="button" class="mon-menos" aria-label="Tirar um monitor">−</button>
+            <output class="mon-n" aria-live="polite">0</output>
+            <button type="button" class="mon-mais" aria-label="Adicionar um monitor">+</button>
+          </div>
+          <p class="mon-total">Nenhum monitor extra</p>
+        </div>
+        <p class="mon-mais-servicos">Também fazemos <b>recreação</b> e <b>pintura facial</b>. Peça no orçamento.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloco faixa monitores mon-b" id="monitores-b" data-opcao="b" hidden>
+    <div class="miolo">
+      <div class="mon-cartaz">
+        <div class="mon-topo">
+          <span class="mon-escudo" aria-hidden="true">🛡️</span>
+          <div><span class="olho">Nosso maior diferencial</span><h2>Monitores Maja Kids:<br>segurança e diversão!</h2></div>
+        </div>
+        <div class="mon-corpo">
+          <figure class="mon-foto"><img src="img/multiplay-2.webp" alt="Monitora da Maja Kids acompanhando as crianças" loading="lazy"><span class="prov">Foto provisória</span></figure>
+          <div class="mon-texto">
+            <p class="mon-destaque">Na Maja Kids você não leva só brinquedos: leva cuidado, organização e segurança. 💛</p>
+            <div class="mon-cards">
+              <div><span aria-hidden="true">🎓</span><b>Capacitados</b><p>Profissionais preparados para acompanhar as brincadeiras.</p></div>
+              <div><span aria-hidden="true">🧩</span><b>Organizados</b><p>Organizam as atividades e a vez de cada criança.</p></div>
+              <div><span aria-hidden="true">💛</span><b>Tranquilidade</b><p>Mais tranquilidade para os pais curtirem a festa.</p></div>
+            </div>
+            <p>Nossos brinquedos possuem opções de locação com monitores. Quer reforçar a equipe? Contrate profissionais extras.</p>
+            <div class="mon-extra">
+          <div><b>Adicionar monitor extra</b><span>R$ 100,00 por profissional</span></div>
+          <div class="passo-qtd" role="group" aria-label="Monitores extras">
+            <button type="button" class="mon-menos" aria-label="Tirar um monitor">−</button>
+            <output class="mon-n" aria-live="polite">0</output>
+            <button type="button" class="mon-mais" aria-label="Adicionar um monitor">+</button>
+          </div>
+          <p class="mon-total">Nenhum monitor extra</p>
+        </div>
+            <p class="mon-mais-servicos">Também fazemos <b>recreação</b> e <b>pintura facial</b>. Peça no orçamento.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -781,7 +881,10 @@ footer a { color: #fff; }
   const categorias = ["Todos", "Infláveis", "Playground", "Jogos", "Extras"];
   let catAtual = "Todos";
   const festa = new Set();
-  let ocupados = new Set(), pedidoData = 0;
+  let ocupados = new Set(), pedidoData = 0, monitores = 0;
+  const PRECO_MONITOR = 100;
+  const reais = v => v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+  try { monitores = Math.min(10, Math.max(0, parseInt(localStorage.getItem("maja-monitores"), 10) || 0)); } catch (e) {}
   try { JSON.parse(localStorage.getItem("maja-festa") || "[]").forEach(id => { if (brinquedos.some(b => b.id === id)) festa.add(id); }); } catch (e) {}
 
   function montarFiltros() {
@@ -893,9 +996,12 @@ footer a { color: #fff; }
     const lista = brinquedos.filter(b => festa.has(b.id));
     const n = lista.length;
     marcarBotoes();
-    $("barra").dataset.vazia = n === 0;
-    if (n === 0) { $("detalhe").hidden = true; $("ver").setAttribute("aria-expanded", false); $("ver").textContent = "Ver lista e data"; }
-    $("texto-barra").textContent = n === 1 ? "1 brinquedo na sua festa" : `${n} brinquedos na sua festa`;
+    try { localStorage.setItem("maja-monitores", monitores); } catch (e) {}
+    pintarMonitores();
+    $("barra").dataset.vazia = n === 0 && monitores === 0;
+    if (n === 0 && monitores === 0) { $("detalhe").hidden = true; $("ver").setAttribute("aria-expanded", false); $("ver").textContent = "Ver lista e data"; }
+    const txtMon = monitores ? `${monitores} monitor${monitores > 1 ? "es" : ""}` : "";
+    $("texto-barra").textContent = (n ? (n === 1 ? "1 brinquedo" : `${n} brinquedos`) + (txtMon ? " + " + txtMon : "") : txtMon || "0 brinquedos") + " na sua festa";
     $("miniaturas").replaceChildren(...lista.slice(-5).map(b => {
       const i = document.createElement("img"); i.src = capa(b); i.alt = "";
       if (b.id === novo) i.className = "nova";
@@ -907,9 +1013,31 @@ footer a { color: #fff; }
       li.innerHTML = `<img src="${capa(b)}" alt=""><span>${b.nome}${ocupados.has(b.id) ? '<small class="ocupado-aviso">Já reservado nessa data. Escolha outra data ou tire da lista.</small>' : ""}</span><button class="tirar">Remover</button>`;
       li.querySelector(".tirar").addEventListener("click", () => { festa.delete(b.id); atualizar(); });
       return li;
-    }));
+    }), ...(monitores ? [(() => {
+      const li = document.createElement("li"); li.className = "mon-linha";
+      li.innerHTML = `<img src="img/logo.webp" alt=""><span>${monitores} monitor${monitores > 1 ? "es" : ""} extra${monitores > 1 ? "s" : ""}<small>${reais(monitores * PRECO_MONITOR)} (R$ 100,00 cada)</small></span><button class="tirar">Remover</button>`;
+      li.querySelector(".tirar").addEventListener("click", () => { monitores = 0; atualizar(); });
+      return li;
+    })()] : []));
     atualizarLink();
   }
+  /* ===== Monitores extras (R$ 100 cada) ===== */
+  function pintarMonitores() {
+    document.querySelectorAll(".mon-extra").forEach(c => {
+      c.querySelector(".mon-n").textContent = monitores;
+      c.querySelector(".mon-menos").disabled = monitores === 0;
+      c.querySelector(".mon-mais").disabled = monitores >= 10;
+      const t = c.querySelector(".mon-total");
+      t.classList.toggle("tem", monitores > 0);
+      t.textContent = monitores ? `${monitores} × R$ 100,00 = ${reais(monitores * PRECO_MONITOR)} somados ao seu orçamento` : "Nenhum monitor extra";
+    });
+  }
+  document.querySelectorAll(".mon-extra").forEach(c => {
+    c.querySelector(".mon-mais").addEventListener("click", () => { monitores = Math.min(10, monitores + 1); atualizar(); });
+    c.querySelector(".mon-menos").addEventListener("click", () => { monitores = Math.max(0, monitores - 1); atualizar(); });
+  });
+  /* Prévia das duas opções de visual: ?opcao=b mostra a opção B */
+  if (new URLSearchParams(location.search).get("opcao") === "b") { const a = $("monitores"); a.hidden = true; a.id = "monitores-a"; $("monitores-b").hidden = false; $("monitores-b").id = "monitores"; }
   function atualizarLink() {
     const lista = brinquedos.filter(b => festa.has(b.id));
     const data = dataValida($("data-festa").value), local = $("local-festa").value.trim().replace(/\s+/g, " ");
@@ -917,6 +1045,7 @@ footer a { color: #fff; }
     if (data) { const [a, m, d] = data.split("-"); msg += `\nData: ${d}/${m}/${a}`; }
     if (/\p{L}.*\p{L}/u.test(local)) msg += `\nLocal: ${local}`;
     if (lista.length) msg += "\nBrinquedos:\n" + lista.map(b => "- " + b.nome).join("\n");
+    if (monitores) msg += `\nMonitores extras: ${monitores} (${reais(monitores * PRECO_MONITOR)}, R$ 100,00 cada)`;
     msg += "\nPode me passar o orçamento?";
     $("enviar").href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
   }
@@ -941,11 +1070,11 @@ footer a { color: #fff; }
     msg.classList.remove("ok");
     if (nome.split(" ").filter(p => p.length > 1).length < 2) { msg.textContent = "Escreva seu nome e sobrenome."; $("p-nome").focus(); return; }
     if (!/^[1-9]{2}9\d{8}$/.test(tel)) { msg.textContent = "Escreva um celular com DDD, por exemplo (33) 99999-9999."; $("p-tel").focus(); return; }
-    if (!festa.size) { msg.textContent = "Escolha pelo menos um brinquedo no catálogo."; return; }
+    if (!festa.size && !monitores) { msg.textContent = "Escolha pelo menos um brinquedo no catálogo."; return; }
     bt.disabled = true; msg.textContent = "Enviando…";
     try {
       const r = await fetch("/api/pedido-orcamento", { method: "POST", headers: { "content-type": "application/json" },
-        body: JSON.stringify({ nome, telefone: tel, data: dataValida($("data-festa").value), local: $("local-festa").value.trim(), brinquedos: [...festa], empresa: $("p-empresa").value }) });
+        body: JSON.stringify({ nome, telefone: tel, data: dataValida($("data-festa").value), local: $("local-festa").value.trim(), brinquedos: [...festa], monitores, empresa: $("p-empresa").value }) });
       const d = await r.json().catch(() => ({}));
       if (!r.ok) throw new Error(d.erro || "Não deu para enviar agora. Chame a gente no WhatsApp.");
       msg.textContent = "Pedido enviado! A Maja Kids vai te chamar no WhatsApp."; msg.classList.add("ok");

@@ -260,6 +260,18 @@ section.bloco { padding-block: clamp(60px, 9vw, 104px); }
 .cabeca p { color: var(--tinta-suave); font-size: 1.04rem; }
 
 /* Catálogo */
+.dispo { display: grid; grid-template-columns: 1fr auto; gap: 10px 18px; align-items: center; background: var(--superficie); border: 1.5px solid var(--linha); border-radius: 16px; padding: 16px 18px; margin-bottom: 20px; }
+.dispo-txt { display: grid; gap: 2px; }
+.dispo-txt span { font-size: .9rem; color: var(--tinta-suave); }
+.dispo-campo { display: grid; gap: 4px; }
+.dispo-campo label { font-weight: 700; font-size: .84rem; }
+.dispo-campo input { font: inherit; padding: 10px 12px; border-radius: 10px; border: 1.5px solid var(--linha); background: var(--superficie); color: var(--tinta); }
+.dispo-campo input:focus { outline: none; border-color: var(--azul); }
+.dispo-msg { grid-column: 1 / -1; margin: 0; font-weight: 700; font-size: .92rem; }
+.dispo-msg:empty { display: none; }
+.dispo-msg.livre { color: var(--whats); }
+.dispo-msg.ocupado { color: #B42318; }
+@media (max-width: 620px) { .dispo { grid-template-columns: 1fr; } }
 .filtros { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
 .filtro { border: 1.5px solid var(--linha); background: var(--superficie); border-radius: 999px; padding: 8px 16px; font-weight: 700; font-size: .92rem; transition: border-color .15s, background .15s; }
 .filtro:hover { border-color: var(--tinta-suave); }
@@ -511,6 +523,11 @@ footer a { color: #fff; }
         <span class="olho">Catálogo</span>
         <h2>Escolha os brinquedos da festa</h2>
         <p>Adicione os brinquedos que quiser. Eles vão para a barra no rodapé da tela, e no final você envia tudo de uma vez pelo WhatsApp.</p>
+      </div>
+      <div class="dispo" id="dispo">
+        <div class="dispo-txt"><b>Veja o que está livre na data da sua festa</b><span>Escolha o dia e os brinquedos já reservados aparecem marcados.</span></div>
+        <div class="dispo-campo"><label for="data-consulta">Data da festa</label><input type="date" id="data-consulta"></div>
+        <p class="dispo-msg" id="dispo-msg" aria-live="polite"></p>
       </div>
       <div class="filtros" id="filtros" role="group" aria-label="Filtrar por tipo de brinquedo"></div>
       <div class="grade" id="grade"></div>
@@ -828,16 +845,28 @@ footer a { color: #fff; }
 
   /* ===== Disponibilidade: brinquedos já reservados na data escolhida (vem do painel) ===== */
   async function checarData(data) {
-    const meu = ++pedidoData;
-    let novos = new Set();
+    const meu = ++pedidoData, msg = $("dispo-msg");
+    let novos = new Set(), falhou = false;
+    if ($("data-consulta").value !== (data || "")) $("data-consulta").value = data || "";
+    if ($("data-festa").value !== (data || "")) $("data-festa").value = data || "";
     if (data) {
+      msg.className = "dispo-msg"; msg.textContent = "Consultando…";
       try {
         const r = await fetch("/api/disponibilidade?data=" + encodeURIComponent(data));
-        if (r.ok) novos = new Set(((await r.json()).ocupados || []).filter(id => typeof id === "string"));
-      } catch (e) {}
+        if (r.ok) novos = new Set(((await r.json()).ocupados || []).filter(id => typeof id === "string")); else falhou = true;
+      } catch (e) { falhou = true; }
     }
     if (meu !== pedidoData) return;
     ocupados = novos;
+    if (!data) { msg.textContent = ""; }
+    else if (falhou) { msg.className = "dispo-msg"; msg.textContent = "Não deu para consultar agora. Pergunte pelo WhatsApp."; }
+    else {
+      const [a, m, d] = data.split("-"), livres = brinquedos.filter(b => !ocupados.has(b.id)).length;
+      msg.className = "dispo-msg " + (livres ? "livre" : "ocupado");
+      msg.textContent = !ocupados.size ? `Dia ${d}/${m}/${a}: todos os brinquedos estão livres!`
+        : livres ? `Dia ${d}/${m}/${a}: ${livres} de ${brinquedos.length} brinquedos livres. Os reservados aparecem marcados.`
+        : `Dia ${d}/${m}/${a}: todos os brinquedos já estão reservados. Tente outra data.`;
+    }
     atualizar();
   }
 
@@ -893,10 +922,11 @@ footer a { color: #fff; }
   }
   ["data-festa", "local-festa"].forEach(id => $(id).addEventListener("input", atualizarLink));
   $("data-festa").addEventListener("change", () => checarData(dataValida($("data-festa").value)));
+  $("data-consulta").addEventListener("change", () => { $("data-festa").value = $("data-consulta").value; checarData(dataValida($("data-consulta").value)); atualizarLink(); });
   /* Verificação de dados (regra PineWeb): data só entra na mensagem se for de hoje até 2 anos à frente */
   const isoLocal = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
   const hoje = new Date(), limite = new Date(hoje.getFullYear() + 2, hoje.getMonth(), hoje.getDate());
-  $("data-festa").min = isoLocal(hoje); $("data-festa").max = isoLocal(limite);
+  $("data-festa").min = $("data-consulta").min = isoLocal(hoje); $("data-festa").max = $("data-consulta").max = isoLocal(limite);
   function dataValida(v) {
     const ok = !v || (v >= isoLocal(hoje) && v <= isoLocal(limite));
     $("erro-data").textContent = ok ? "" : (v < isoLocal(hoje) ? "Essa data já passou. Escolha uma data a partir de hoje." : "Escolha uma data dentro dos próximos 2 anos.");

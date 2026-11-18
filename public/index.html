@@ -718,8 +718,8 @@ footer a { color: #fff; }
     { id: "aero-hockey", nome: "Mesa de Aero Hockey", cat: "Jogos", fotos: ["aero-hockey"], monitor: "Opcional", energia: "Usa energia elétrica" },
     { id: "basquete", nome: "Basquete Infantil Eletrônico", cat: "Jogos", fotos: ["basquete"], monitor: "Opcional", energia: "Usa energia elétrica" },
     { id: "algodao-doce", nome: "Máquina de Algodão Doce", cat: "Extras", fotos: ["algodao-doce"], monitor: "Opcional", obs: "Só a máquina, ou máquina com monitor e açúcar." },
-    { id: "maquina-espuma", nome: "Máquina de Espuma", cat: "Extras", fotos: [], monitor: "Opcional", energia: "Usa energia elétrica", obs: "Precisa de fonte de água durante todo o uso." },
-    { id: "maquina-bolha", nome: "Máquina de Bolha de Sabão", cat: "Extras", fotos: [], monitor: "Opcional", energia: "Usa energia elétrica", obs: "Tem reservatório de água próprio." }
+    { id: "maquina-espuma", nome: "Máquina de Espuma", cat: "Extras", fotos: ["maquina-espuma"], monitor: "Opcional", energia: "Usa energia elétrica", obs: "Precisa de fonte de água durante todo o uso." },
+    { id: "maquina-bolha", nome: "Máquina de Bolha de Sabão", cat: "Extras", fotos: ["maquina-bolha", "maquina-bolha-2"], monitor: "Opcional", energia: "Usa energia elétrica", obs: "Tem reservatório de água próprio." }
   ];
   const foto = f => "img/" + f + ".webp";
   const capa = b => b.fotos.length ? foto(b.fotos[0]) : "img/logo.webp";
